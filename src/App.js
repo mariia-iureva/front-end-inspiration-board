@@ -6,12 +6,27 @@ import BoardList from './components/BoardList';
 import NewBoardForm from './components/NewBoardForm';
 
 function App() {
-  // const [boardsData, setBoardsData] = useState([]);
+  const [boardsData, setBoardsData] = useState([]);
   // const [selectedBoard, setSelectedBoard] = useState();
   // const [selectedBoardLabel, setSelectedBoardLabel] = useState("Select a board from the board list!");
   // const [isBoardComponentVisible, setIsBoardComponentVisible] = useState(false);
-
   // const [cardsData, setCardsData] = useState();
+
+  const [boardFormVisibility, setBoardFormVisibility] = useState(true);
+
+  const addBoard = (title, owner) => {
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/boards`, { title, owner })
+      .then((result) => {
+        const newBoard = {
+          board_id: result.data.board.board_id,
+          title: result.data.board.title,
+          owner: result.data.board.owner,
+        };
+        setBoardsData([...boardsData, newBoard]);
+      })
+      .catch((error) => console.log(error.response.data));
+  };
 
   // How are we going to extract the array of cards from a selected board?
   // SUGGESTED BOARD PROPS: board, onBoardSelect
@@ -60,7 +75,25 @@ function App() {
           <section id='selected-board'>
             <h2>Selected Board</h2>
           </section>
-          {/* <NewBoardForm onAddBoard={addBoard}/> */}
+          <section className='new-board-form__container'>
+            <h2>Create a New Board</h2>
+            {boardFormVisibility ? (
+            <NewBoardForm onAddBoardCallback={addBoard} />
+            ) : (
+              ""
+            )}
+            <button
+              id="hide-btn"
+              type="button"
+              onClick={() => {
+                setBoardFormVisibility(!boardFormVisibility);
+              }}
+            >
+              {boardFormVisibility
+                ? "Hide New Board Form"
+                : "Show New Board Form"}
+            </button>
+          </section>
         </section>
         <Board 
           // cardsData={cardsData}
