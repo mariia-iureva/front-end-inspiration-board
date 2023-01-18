@@ -6,8 +6,8 @@ import './CardList.css';
 const CardList = (props) => {
     return (
         <div className='card-items__container'>
-            {/* <p>This is where we unpack cards passed from App</p> */}
-            <ul className='card-list'>
+            <p>This is where we unpack cards passed from App</p>
+            {/* <ul className='card-list'>
                 {props.cardsData.map((card) => (
                     <li><Card 
                         card_id={card.card_id}
@@ -16,7 +16,7 @@ const CardList = (props) => {
                         message={card.message}
                     /></li>
                 ))}
-            </ul>
+            </ul> */}
         </div>
     );
 };

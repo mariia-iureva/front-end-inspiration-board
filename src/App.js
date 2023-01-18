@@ -6,28 +6,28 @@ import BoardList from './components/BoardList';
 import NewBoardForm from './components/NewBoardForm';
 
 function App() {
-  const [boardsData, setBoardsData] = useState([]);
-  const [selectedBoard, setSelectedBoard] = useState();
-  const [selectedBoardLabel, setSelectedBoardLabel] = useState("Select a board from the board list!");
-  const [isBoardComponentVisible, setIsBoardComponentVisible] = useState(false);
+  // const [boardsData, setBoardsData] = useState([]);
+  // const [selectedBoard, setSelectedBoard] = useState();
+  // const [selectedBoardLabel, setSelectedBoardLabel] = useState("Select a board from the board list!");
+  // const [isBoardComponentVisible, setIsBoardComponentVisible] = useState(false);
 
-  const [cardsData, setCardsData] = useState();
+  // const [cardsData, setCardsData] = useState();
 
   // How are we going to extract the array of cards from a selected board?
   // SUGGESTED BOARD PROPS: board, onBoardSelect
   // SUGGESTED NEWBOARDFORM PROPS: createNewBoard
   // SUGGESTED NEWBOARDFORM STATE: title, owner
 
-  const getAllBoards = () => {
-    axios
-      .get('http://127.0.0.1:5000/boards')
-      .then((response) => {
-        setBoardsData(response.data);
-      })
-      .catch((error) => {
-        console.error(error.response.data.message);
-      });
-  };
+  // const getAllBoards = () => {
+  //   axios
+  //     .get('http://127.0.0.1:5000/boards')
+  //     .then((response) => {
+  //       setBoardsData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error.response.data.message);
+  //     });
+  // };
 
   // const getOneBoard = (board_id) => {
   //   axios
@@ -53,9 +53,9 @@ function App() {
   //   setIsBoardComponentVisible(!isBoardComponentVisible);
   // }
 
-  useEffect(() => {
-    getAllBoards();
-  }, []);
+  // useEffect(() => {
+  //   getAllBoards();
+  // }, []);
 
   return (
     <div className='page__container'>
@@ -74,7 +74,7 @@ function App() {
           {/* <NewBoardForm onAddBoard={addBoard}/> */}
         </section>
         <Board 
-          cardsData={cardsData}
+          // cardsData={cardsData}
         />
       </div>
       <footer><span>This is a filler footer!</span></footer>
