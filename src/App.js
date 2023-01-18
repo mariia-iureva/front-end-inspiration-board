@@ -9,10 +9,10 @@ function App() {
   const [boardsData, setBoardsData] = useState([]);
   // const [selectedBoard, setSelectedBoard] = useState();
   // const [selectedBoardLabel, setSelectedBoardLabel] = useState("Select a board from the board list!");
-  // const [isBoardComponentVisible, setIsBoardComponentVisible] = useState(false);
-  // const [cardsData, setCardsData] = useState();
+  const [cardsData, setCardsData] = useState();
 
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
+  const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
 
   const addBoard = (title, owner) => {
     axios
@@ -33,16 +33,27 @@ function App() {
   // SUGGESTED NEWBOARDFORM PROPS: createNewBoard
   // SUGGESTED NEWBOARDFORM STATE: title, owner
 
-  // const getAllBoards = () => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_BACKEND_URL}/boards`)
-  //     .then((response) => {
-  //       setBoardsData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error.response.data.message);
-  //     });
-  // };
+  const getAllBoards = () => {
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/boards`)
+      .then((response) => {
+        setBoardsData(response.data);
+      })
+      .catch((error) => {
+        console.error(error.response.data.message);
+      });
+  };
+
+  const getAllCards = boardId => {
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${boardId}/cards`)
+      .then((response) => {
+        setCardsData(response.data);
+      })
+      .catch((error) => {
+        console.error(error.response.data.message)
+      });
+  };
 
   // const deleteCard = (id) => {
   //   const newCards = cards.filter((card) => card.id !== id);
