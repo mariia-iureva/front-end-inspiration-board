@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './App.css';
 import Board from './components/Board';
 import BoardList from './components/BoardList';
@@ -8,7 +9,9 @@ function App() {
   return (
     <div className='page__container'>
       <div className='content__container'>
-        <h1>Leaping Lizards Inspiration Board</h1>
+        <header className='App-header'>
+          <h1>Leaping Lizards Inspiration Board</h1>
+        </header>
         <section className='boards__container'>
           <section id='view-all-boards'>
             <h2>Boards</h2>
