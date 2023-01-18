@@ -8,11 +8,10 @@ import NewBoardForm from './components/NewBoardForm';
 function App() {
   const [boardsData, setBoardsData] = useState([]);
   // const [selectedBoard, setSelectedBoard] = useState();
-  // const [selectedBoardLabel, setSelectedBoardLabel] = useState("Select a board from the board list!");
-  const [cardsData, setCardsData] = useState();
+  const [cardsData, setCardsData] = useState([]);
 
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
-  const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
+  // const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
 
   const addBoard = (title, owner) => {
     axios
@@ -85,6 +84,7 @@ function App() {
           </section>
           <section id='selected-board'>
             <h2>Selected Board</h2>
+            <p>This is where we'll put the title of a selected board</p>
           </section>
           <section className='new-board-form__container'>
             <h2>Create a New Board</h2>
@@ -110,7 +110,7 @@ function App() {
           // cardsData={cardsData}
         />
       </div>
-      <footer><span>This is a filler footer!</span></footer>
+      <footer><span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span></footer>
     </div>
   );
 }
