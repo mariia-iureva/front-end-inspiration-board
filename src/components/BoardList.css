@@ -1,0 +1,7 @@
+.boards__list {
+    border: 1px solid #000;
+    margin-right: 2rem;
+    max-height: 9rem;
+    min-height: 9rem;
+    overflow: scroll;
+}
