@@ -9,10 +9,10 @@ function App() {
   const [boardsData, setBoardsData] = useState([]);
   // const [selectedBoard, setSelectedBoard] = useState();
   // const [selectedBoardLabel, setSelectedBoardLabel] = useState("Select a board from the board list!");
-  // const [isBoardComponentVisible, setIsBoardComponentVisible] = useState(false);
   const [cardsData, setCardsData] = useState();
 
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
+  const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
 
   const addBoard = (title, owner) => {
     axios
