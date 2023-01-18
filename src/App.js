@@ -20,20 +20,9 @@ function App() {
 
   // const getAllBoards = () => {
   //   axios
-  //     .get('http://127.0.0.1:5000/boards')
+  //     .get(`${process.env.REACT_APP_BACKEND_URL}/boards`)
   //     .then((response) => {
   //       setBoardsData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error.response.data.message);
-  //     });
-  // };
-
-  // const getOneBoard = (board_id) => {
-  //   axios
-  //     .get('http://127.0.0.1:5000/boards/{board_id}')
-  //     .then((response) => {
-  //       setSelectedBoard(response.data);
   //     })
   //     .catch((error) => {
   //       console.error(error.response.data.message);
