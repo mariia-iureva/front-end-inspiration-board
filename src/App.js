@@ -1,13 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './App.css';
-import Board from './components/Board';
-import BoardList from './components/BoardList';
-import NewBoardForm from './components/NewBoardForm';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./App.css";
+import Board from "./components/Board";
+import BoardList from "./components/BoardList";
+import NewBoardForm from "./components/NewBoardForm";
 
 function App() {
   const [boardsData, setBoardsData] = useState([]);
-  // const [selectedBoard, setSelectedBoard] = useState();
+
+  // Thao
+  const [selectedBoard, setSelectedBoard] = useState(null);
+  const selectBoard = (boardId) => {
+    setSelectedBoard(boardId); // tells our state, updates board id
+  };
+
+  // DUMMY DATA 
+
+  const BOARDS = [
+    {
+      board_id: 1,
+      owner: "thao",
+
+      title: "Live your best life",
+    },
+  ];
+
+// helper functions to help display title & owner, pass boardsData in instead of BOARDS
+// if any board in BOARDS id matches id of selectedBoard, give us title & owner 
+// const getSelectedTitle = (BOARDS) => {
+//     for (let board of BOARDS) {
+//       if (board.boardId === selectedBoard) {
+//         return board.title;
+//       }
+//     }
+//   };
+//   const getSelectedOwner = (BOARDS) => {
+//     for (let board of BOARDS) {
+//       if (board.boardId === selectedBoard) {
+//         return board.owner;
+//       }
+//     }
+//   };
+
+
+
+
+
+  // no selected board when on website
   // const [selectedBoardLabel, setSelectedBoardLabel] = useState("Select a board from the board list!");
   // const [isBoardComponentVisible, setIsBoardComponentVisible] = useState(false);
   // const [cardsData, setCardsData] = useState();
@@ -62,23 +101,24 @@ function App() {
   // }, []);
 
   return (
-    <div className='page__container'>
-      <div className='content__container'>
-        <header className='App-header'>
+    <div className="page__container">
+      <div className="content__container">
+        <header className="App-header">
           <h1>Leaping Lizards Inspiration Board</h1>
         </header>
-        <section className='boards__container'>
-          <section id='view-all-boards'>
+        <section className="boards__container">
+          <section id="view-all-boards">
             <h2>Boards</h2>
-            {/* <BoardList boardsData={boardsData}/> */}
+            {/* <BoardList boardsData={boardsData} onSelectBoard={selectBoard} /> */}
+            <BoardList boardsData={BOARDS} onSelectBoard={selectBoard} />
           </section>
-          <section id='selected-board'>
+          <section id="selected-board">
             <h2>Selected Board</h2>
           </section>
-          <section className='new-board-form__container'>
+          <section className="new-board-form__container">
             <h2>Create a New Board</h2>
             {boardFormVisibility ? (
-            <NewBoardForm onAddBoardCallback={addBoard} />
+              <NewBoardForm onAddBoardCallback={addBoard} />
             ) : (
               ""
             )}
@@ -96,12 +136,22 @@ function App() {
           </section>
         </section>
         <Board 
-          // cardsData={cardsData}
+        // cardsData={cardsData}
         />
       </div>
-      <footer><span>This is a filler footer!</span></footer>
+      <footer>
+        <span>This is a filler footer!</span>
+      </footer>
     </div>
   );
 }
 
 export default App;
+
+
+
+
+{/* THAO  */}
+{/* <Board 
+title={getSelectedTitle(BOARDS)}
+owner={getSelectedOwner(BOARDS)} */}

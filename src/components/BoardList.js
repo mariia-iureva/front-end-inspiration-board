@@ -8,10 +8,10 @@ const BoardList = (props) => {
       {props.boardsData.map((board) => (
         <li
           key={board.boardId}
-          onClick={() => props.onSelectBoard(board.boardId)}
+          onClick={() => props.onSelectBoard(board.boardId)} 
           title={board.title}
         >
-          // display board title here, visible on page
+          {/*display board title here, visible on page */}
           {board.title}
         </li>
       ))}
@@ -20,7 +20,7 @@ const BoardList = (props) => {
   );
 };
 
-Boardlist.propTypes = {
+BoardList.propTypes = {
   boardsData: PropTypes.arrayOf(
     PropTypes.shape({
       boardId: PropTypes.number.isRequired,
