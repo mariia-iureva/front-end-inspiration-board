@@ -115,7 +115,7 @@ function App() {
           </section>
           <section id="selected-board">
             <h2>Selected Board</h2>
-            {selectedBoardObj?.title || 'Select a board'}
+            <p>{selectedBoardObj?.title || 'Select a board'} - {selectedBoardObj?.owner}</p>
           </section>
           <section className="new-board-form__container">
             <h2>Create a New Board</h2>

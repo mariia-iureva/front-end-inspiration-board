@@ -6,3 +6,8 @@
     min-height: 9rem;
     overflow: scroll;
 }
+
+li:hover {
+    cursor: pointer;
+    background-color: lightgrey;
+}
