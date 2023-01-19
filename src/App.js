@@ -66,7 +66,7 @@ function App() {
 
   const selectedBoardObj = useMemo(
     () => {
-      if (!selectBoard || !boardsData || !boardsData.length) {
+      if (!selectedBoard || !boardsData || !boardsData.length) {
         return undefined;
       }
       return boardsData.find(board => board.board_id === selectedBoard);
