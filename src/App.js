@@ -11,7 +11,7 @@ function App() {
   const [cardsData, setCardsData] = useState([]);
 
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
-  // const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
+  const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
 
   const addBoard = (title, owner) => {
     axios
@@ -109,16 +109,13 @@ function App() {
   //     });
   // };
 
-  // const boardComponentVisibility = () => {
-  //   // this function should change the visiblity of the Board component based on board selection
-  // }
-
   const selectBoard = useCallback(
     (boardId) => {
       setSelectedBoard(boardId);
       getAllCards(boardId);
+      setBoardComponentVisibility(!boardComponentVisibility);
     },
-    [setSelectedBoard]
+    [setSelectedBoard, boardComponentVisibility]
   );
 
   return (
@@ -161,13 +158,17 @@ function App() {
         </section>
         <section className="cards__container">
           <section id="view-all-cards">
-            <Board
-              cardsData={cardsData}
-              selectedBoardObj={selectedBoardObj}
-              onAddCardCallback={addCard}
-              //    onDelete={deleteCard}
-              //    onLike={likeCard}
-            />
+            {boardComponentVisibility ? (
+              <Board
+                cardsData={cardsData}
+                selectedBoardObj={selectedBoardObj}
+                onAddCardCallback={addCard}
+                //    onDelete={deleteCard}
+                //    onLike={likeCard}
+              />
+            ) : (
+              ''
+            )}
           </section>
         </section>
       </div>
