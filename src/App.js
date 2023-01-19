@@ -1,9 +1,9 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import axios from 'axios';
-import './App.css';
-import Board from './components/Board';
-import BoardList from './components/BoardList';
-import NewBoardForm from './components/NewBoardForm';
+import React, { useEffect, useState, useCallback, useMemo } from "react";
+import axios from "axios";
+import "./App.css";
+import Board from "./components/Board";
+import BoardList from "./components/BoardList";
+import NewBoardForm from "./components/NewBoardForm";
 
 function App() {
   const [boardsData, setBoardsData] = useState([]);
@@ -38,16 +38,48 @@ function App() {
       });
   };
 
-  const getAllCards = (selectedBoardObj) => {
+  // const getAllCards = (selectedBoardObj) => {
+  //   axios
+  //     .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`)
+  //     .then((response) => {
+  //       setCardsData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error.response.data.message);
+  //     });
+  // };
+
+  const getAllCards = (boardId) => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${boardId}/cards`)
       .then((response) => {
-        setCardsData(response.data);
+        console.log(response.data);
+        // added .cards here!!!
+        setCardsData(response.data.cards);
       })
       .catch((error) => {
         console.error(error.response.data.message);
       });
   };
+
+  const selectedBoardObj = useMemo(() => {
+    if (!selectedBoard || !boardsData?.length) {
+      return undefined;
+    }
+    console.log(boardsData);
+    return boardsData.find((board) => board.board_id === selectedBoard);
+  }, [boardsData, selectedBoard]);
+
+  useEffect(() => {
+    getAllBoards();
+  }, []);
+
+  // useEffect(() => {
+  //   if (!selectedBoard) {
+  //     return;
+  //   }
+  //   getAllCards(selectedBoard.board_id);
+  // }, [selectedBoard]);
 
   // const deleteCard = (cardId) => {
   //   axios
@@ -82,26 +114,15 @@ function App() {
   //   // this function should change the visiblity of the Board component based on board selection
   // }
 
-  // const selectBoard = useCallback((boardId) => {
-  //   setSelectedBoard(boardId);
-  // },
-  // [setSelectedBoard],
-  // );
-
-  const selectedBoardObj = useMemo(
-    () => {
-      if (!selectedBoard || !boardsData?.length) {
-        return undefined;
-      }
-      return boardsData.find(board => board.board_id === selectedBoard);
+  // finished this previously commented part with Matt's help!!
+  const selectBoard = useCallback(
+    (boardId) => {
+      setSelectedBoard(boardId);
+      getAllCards(boardId);
     },
-    [boardsData, selectedBoard],
+    [setSelectedBoard]
   );
 
-  useEffect(() => {
-    getAllBoards();
-  }, []);
- 
   return (
     <div className="page__container">
       <div className="content__container">
@@ -111,11 +132,14 @@ function App() {
         <section className="boards__container">
           <section id="view-all-boards">
             <h2>Boards</h2>
-            <BoardList boardsData={boardsData} onSelectBoard={setSelectedBoard} />
+            <BoardList boardsData={boardsData} onSelectBoard={selectBoard} />
           </section>
           <section id="selected-board">
             <h2>Selected Board</h2>
-            <p>{selectedBoardObj?.title || 'Select a board'} - {selectedBoardObj?.owner}</p>
+            <p>
+              {selectedBoardObj?.title || "Select a board"} -{" "}
+              {selectedBoardObj?.owner}
+            </p>
           </section>
           <section className="new-board-form__container">
             <h2>Create a New Board</h2>
@@ -138,14 +162,17 @@ function App() {
           </section>
         </section>
         <Board
-        cardsData={cardsData} selectedBoardObj={selectedBoardObj}
+          cardsData={cardsData}
+          selectedBoardObj={selectedBoardObj}
 
-        // in the CardList??
-        //    onDelete={deleteCard}
-        //    onLike={likeCard}
+          // in the CardList??
+          //    onDelete={deleteCard}
+          //    onLike={likeCard}
         />
       </div>
-      <footer><span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span></footer>
+      <footer>
+        <span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span>
+      </footer>
     </div>
   );
 }
