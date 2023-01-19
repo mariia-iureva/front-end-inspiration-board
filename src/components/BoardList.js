@@ -7,14 +7,13 @@ const BoardList = (props) => {
     <ol className="boards__list">
       {props.boardsData.map((board) => (
         <li
-          key={board.boardId}
-          onClick={() => props.onSelectBoard(board.boardId)}
+          key={`${board.board_id}-${board.owner}`}
+          onClick={() => props.onSelectBoard(board.board_id)}
           title={board.title}
         >
           {board.title}
         </li>
       ))}
-      ;
     </ol>
   );
 };
@@ -22,7 +21,7 @@ const BoardList = (props) => {
 BoardList.propTypes = {
   boardsData: PropTypes.arrayOf(
     PropTypes.shape({
-      boardId: PropTypes.number.isRequired,
+      board_id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       owner: PropTypes.string.isRequired,
     })

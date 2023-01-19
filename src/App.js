@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import "./App.css";
-import Board from "./components/Board";
-import BoardList from "./components/BoardList";
-import NewBoardForm from "./components/NewBoardForm";
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import axios from 'axios';
+import './App.css';
+import Board from './components/Board';
+import BoardList from './components/BoardList';
+import NewBoardForm from './components/NewBoardForm';
 
 function App() {
   const [boardsData, setBoardsData] = useState([]);
-  // const [selectedBoard, setSelectedBoard] = useState();
-  // const [selectedBoardLabel, setSelectedBoardLabel] = useState("Select a board from the board list!");
-  const [cardsData, setCardsData] = useState();
+  const [selectedBoard, setSelectedBoard] = useState(null);
+  const [cardsData, setCardsData] = useState([]);
 
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
-  const [boardComponentVisibility, setBoardComponentVisibility] =
-    useState(false);
+  // const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
 
   const addBoard = (title, owner) => {
     axios
@@ -28,11 +26,6 @@ function App() {
       })
       .catch((error) => console.log(error.response.data));
   };
-
-  // How are we going to extract the array of cards from a selected board?
-  // SUGGESTED BOARD PROPS: board, onBoardSelect
-  // SUGGESTED NEWBOARDFORM PROPS: createNewBoard
-  // SUGGESTED NEWBOARDFORM STATE: title, owner
 
   const getAllBoards = () => {
     axios
@@ -89,14 +82,26 @@ function App() {
   //   // this function should change the visiblity of the Board component based on board selection
   // }
 
-  // const handleOnClick = () => {
-  //   setIsBoardComponentVisible(!isBoardComponentVisible);
-  // }
+  const selectBoard = useCallback((boardId) => {
+    setSelectedBoard(boardId);
+  },
+  [setSelectedBoard],
+  );
 
-  // useEffect(() => {
-  //   getAllBoards();
-  // }, []);
+  const selectedBoardObj = useMemo(
+    () => {
+      if (!selectedBoard || !boardsData?.length) {
+        return undefined;
+      }
+      return boardsData.find(board => board.board_id === selectedBoard);
+    },
+    [boardsData, selectedBoard],
+  );
 
+  useEffect(() => {
+    getAllBoards();
+  }, []);
+ 
   return (
     <div className="page__container">
       <div className="content__container">
@@ -106,10 +111,11 @@ function App() {
         <section className="boards__container">
           <section id="view-all-boards">
             <h2>Boards</h2>
-            {/* <BoardList boardsData={boardsData}/> */}
+            <BoardList boardsData={boardsData} onSelectBoard={setSelectedBoard} />
           </section>
           <section id="selected-board">
             <h2>Selected Board</h2>
+            {selectedBoardObj?.title || 'Select a board'}
           </section>
           <section className="new-board-form__container">
             <h2>Create a New Board</h2>
@@ -139,9 +145,7 @@ function App() {
         //    onLike={likeCard}
         />
       </div>
-      <footer>
-        <span>This is a filler footer!</span>
-      </footer>
+      <footer><span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span></footer>
     </div>
   );
 }
