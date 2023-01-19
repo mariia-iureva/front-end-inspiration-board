@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import axios from 'axios';
 import './App.css';
 import Board from './components/Board';
@@ -7,7 +7,7 @@ import NewBoardForm from './components/NewBoardForm';
 
 function App() {
   const [boardsData, setBoardsData] = useState([]);
-  // const [selectedBoard, setSelectedBoard] = useState();
+  const [selectedBoard, setSelectedBoard] = useState(null);
   const [cardsData, setCardsData] = useState([]);
 
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
@@ -26,11 +26,6 @@ function App() {
       })
       .catch((error) => console.log(error.response.data));
   };
-
-  // How are we going to extract the array of cards from a selected board?
-  // SUGGESTED BOARD PROPS: board, onBoardSelect
-  // SUGGESTED NEWBOARDFORM PROPS: createNewBoard
-  // SUGGESTED NEWBOARDFORM STATE: title, owner
 
   const getAllBoards = () => {
     axios
@@ -63,14 +58,26 @@ function App() {
   //   // this function should change the visiblity of the Board component based on board selection
   // }
 
-  // const handleOnClick = () => {
-  //   setIsBoardComponentVisible(!isBoardComponentVisible);
-  // }
+  const selectBoard = useCallback((boardId) => {
+    setSelectedBoard(boardId);
+  },
+  [setSelectedBoard],
+  );
 
-  // useEffect(() => {
-  //   getAllBoards();
-  // }, []);
+  const selectedBoardObj = useMemo(
+    () => {
+      if (!selectBoard || !boardsData || !boardsData.length) {
+        return undefined;
+      }
+      return boardsData.find(board => board.board_id === selectedBoard);
+    },
+    [boardsData, selectedBoard],
+  );
 
+  useEffect(() => {
+    getAllBoards();
+  }, []);
+ 
   return (
     <div className='page__container'>
       <div className='content__container'>
@@ -80,11 +87,12 @@ function App() {
         <section className='boards__container'>
           <section id='view-all-boards'>
             <h2>Boards</h2>
-            {/* <BoardList boardsData={boardsData}/> */}
+            <BoardList boardsData={boardsData} onSelectBoard={selectBoard} />
           </section>
           <section id='selected-board'>
             <h2>Selected Board</h2>
             <p>This is where we'll put the title of a selected board</p>
+            {/* {selectedBoardObj.title} */}
           </section>
           <section className='new-board-form__container'>
             <h2>Create a New Board</h2>

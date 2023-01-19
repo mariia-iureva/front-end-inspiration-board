@@ -1,0 +1,9 @@
+.card-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff8a5;
+    justify-content: center;
+    min-height: 200px;
+    padding: 2rem;
+  }

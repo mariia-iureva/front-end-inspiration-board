@@ -14,7 +14,6 @@ const BoardList = (props) => {
           {board.title}
         </li>
       ))}
-      ;
     </ol>
   );
 };
