@@ -29,9 +29,10 @@ function App() {
   };
 
   const addCard = (message) => {
+    console.log(selectedBoard.boardId);
     axios
       .post(
-        `${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoard.boardId}/cards`,
+        `${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`,
         { message }
       )
       .then((result) => {
@@ -191,7 +192,7 @@ function App() {
           </section>
           <section className="new-card-form__container">
             {/* <h2>add card:</h2> */}
-            <NewCardForm onAddCardCallback={addCard} />: ( "" )
+            <NewCardForm onAddCardCallback={addCard} />
           </section>
         </section>
       </div>
