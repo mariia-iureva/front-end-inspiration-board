@@ -1,18 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './App.css';
-import Board from './components/Board';
-import BoardList from './components/BoardList';
-import NewBoardForm from './components/NewBoardForm';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./App.css";
+import Board from "./components/Board";
+import Card from "./components/Card";
+import BoardList from "./components/BoardList";
+import NewBoardForm from "./components/NewBoardForm";
+import NewCardForm from "./components/NewCardForm";
 
 function App() {
   const [boardsData, setBoardsData] = useState([]);
   // const [selectedBoard, setSelectedBoard] = useState();
   // const [selectedBoardLabel, setSelectedBoardLabel] = useState("Select a board from the board list!");
-  const [cardsData, setCardsData] = useState();
+  const [cardsData, setCardsData] = useState([]);
 
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
-  const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
+  const [boardComponentVisibility, setBoardComponentVisibility] =
+    useState(false);
 
   const addBoard = (title, owner) => {
     axios
@@ -24,6 +27,20 @@ function App() {
           owner: result.data.board.owner,
         };
         setBoardsData([...boardsData, newBoard]);
+      })
+      .catch((error) => console.log(error.response.data));
+  };
+  const addCard = (message) => {
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/<board_id>/cards`, {
+        message,
+      })
+      .then((result) => {
+        const newCard = {
+          card_id: result.data.card_id,
+          message: result.data.card.message,
+        };
+        setBoardsData([...cardsData, newCard]);
       })
       .catch((error) => console.log(error.response.data));
   };
@@ -44,14 +61,14 @@ function App() {
       });
   };
 
-  const getAllCards = boardId => {
+  const getAllCards = (boardId) => {
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${boardId}/cards`)
       .then((response) => {
         setCardsData(response.data);
       })
       .catch((error) => {
-        console.error(error.response.data.message)
+        console.error(error.response.data.message);
       });
   };
 
@@ -106,11 +123,15 @@ function App() {
             </button>
           </section>
         </section>
-        <Board 
-          // cardsData={cardsData}
+        <Board
+        // cardsData={cardsData}
         />
+        <h3> Create a New Card</h3>
+        <NewCardForm onAddCardCallback={addCard} />
       </div>
-      <footer><span>This is a filler footer!</span></footer>
+      <footer>
+        <span>This is a filler footer!</span>
+      </footer>
     </div>
   );
 }
