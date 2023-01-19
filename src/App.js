@@ -113,9 +113,9 @@ function App() {
     (boardId) => {
       setSelectedBoard(boardId);
       getAllCards(boardId);
-      setBoardComponentVisibility(!boardComponentVisibility);
+      setBoardComponentVisibility(true);
     },
-    [setSelectedBoard, boardComponentVisibility]
+    [setSelectedBoard]
   );
 
   return (
