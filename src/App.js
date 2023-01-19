@@ -14,7 +14,7 @@ function App() {
     setSelectedBoard(boardId); // tells our state, updates board id
   };
 
-  // DUMMY DATA 
+  // DUMMY DATA
 
   const BOARDS = [
     {
@@ -25,26 +25,22 @@ function App() {
     },
   ];
 
-// helper functions to help display title & owner, pass boardsData in instead of BOARDS
-// if any board in BOARDS id matches id of selectedBoard, give us title & owner 
-// const getSelectedTitle = (BOARDS) => {
-//     for (let board of BOARDS) {
-//       if (board.boardId === selectedBoard) {
-//         return board.title;
-//       }
-//     }
-//   };
-//   const getSelectedOwner = (BOARDS) => {
-//     for (let board of BOARDS) {
-//       if (board.boardId === selectedBoard) {
-//         return board.owner;
-//       }
-//     }
-//   };
-
-
-
-
+  // helper functions to help display title & owner, pass boardsData in instead of BOARDS
+  // if any board in BOARDS id matches id of selectedBoard, give us title & owner
+  const getSelectedTitle = (BOARDS) => {
+    for (let board of BOARDS) {
+      if (board.boardId === selectedBoard) {
+        return board.title;
+      }
+    }
+  };
+  const getSelectedOwner = (BOARDS) => {
+    for (let board of BOARDS) {
+      if (board.boardId === selectedBoard) {
+        return board.owner;
+      }
+    }
+  };
 
   // no selected board when on website
   // const [selectedBoardLabel, setSelectedBoardLabel] = useState("Select a board from the board list!");
@@ -135,8 +131,10 @@ function App() {
             </button>
           </section>
         </section>
-        <Board 
-        // cardsData={cardsData}
+        <Board
+          title={getSelectedTitle(BOARDS)}
+          owner={getSelectedOwner(BOARDS)}
+          // cardsData={cardsData}
         />
       </div>
       <footer>
@@ -148,10 +146,11 @@ function App() {
 
 export default App;
 
-
-
-
-{/* THAO  */}
-{/* <Board 
+{
+  /* THAO  */
+}
+{
+  /* <Board 
 title={getSelectedTitle(BOARDS)}
-owner={getSelectedOwner(BOARDS)} */}
+owner={getSelectedOwner(BOARDS)} */
+}
