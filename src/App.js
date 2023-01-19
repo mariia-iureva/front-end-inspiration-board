@@ -11,18 +11,36 @@ function App() {
   const [cardsData, setCardsData] = useState([]);
 
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
-  // const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
+  const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
 
   const addBoard = (title, owner) => {
     axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/boards`, { title, owner })
       .then((result) => {
         const newBoard = {
-          boardId: result.data.board.board_id,
+          board_id: result.data.board.board_id,
           title: result.data.board.title,
           owner: result.data.board.owner,
         };
         setBoardsData([...boardsData, newBoard]);
+      })
+      .catch((error) => console.log(error.response.data));
+  };
+
+  const addCard = (message) => {
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`,
+        { message }
+      )
+      .then((result) => {
+        const newCard = {
+          card_id: result.data.card.id,
+          message: result.data.card.message,
+          likes_count: result.data.card.likes_count,
+          board_id: result.data.card.board_id,
+        };
+        setCardsData([...cardsData, newCard]);
       })
       .catch((error) => console.log(error.response.data));
   };
@@ -38,23 +56,11 @@ function App() {
       });
   };
 
-  // const getAllCards = (selectedBoardObj) => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`)
-  //     .then((response) => {
-  //       setCardsData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error.response.data.message);
-  //     });
-  // };
-
   const getAllCards = (boardId) => {
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${boardId}/cards`)
       .then((response) => {
         console.log(response.data);
-        // added .cards here!!!
         setCardsData(response.data.cards);
       })
       .catch((error) => {
@@ -73,13 +79,6 @@ function App() {
   useEffect(() => {
     getAllBoards();
   }, []);
-
-  // useEffect(() => {
-  //   if (!selectedBoard) {
-  //     return;
-  //   }
-  //   getAllCards(selectedBoard.board_id);
-  // }, [selectedBoard]);
 
   // const deleteCard = (cardId) => {
   //   axios
@@ -110,17 +109,13 @@ function App() {
   //     });
   // };
 
-  // const boardComponentVisibility = () => {
-  //   // this function should change the visiblity of the Board component based on board selection
-  // }
-
-  // finished this previously commented part with Matt's help!!
   const selectBoard = useCallback(
     (boardId) => {
       setSelectedBoard(boardId);
       getAllCards(boardId);
+      setBoardComponentVisibility(!boardComponentVisibility);
     },
-    [setSelectedBoard]
+    [setSelectedBoard, boardComponentVisibility]
   );
 
   return (
@@ -161,14 +156,21 @@ function App() {
             </button>
           </section>
         </section>
-        <Board
-          cardsData={cardsData}
-          selectedBoardObj={selectedBoardObj}
-
-          // in the CardList??
-          //    onDelete={deleteCard}
-          //    onLike={likeCard}
-        />
+        <section className="cards__container">
+          <section id="view-all-cards">
+            {boardComponentVisibility ? (
+              <Board
+                cardsData={cardsData}
+                selectedBoardObj={selectedBoardObj}
+                onAddCardCallback={addCard}
+                //    onDelete={deleteCard}
+                //    onLike={likeCard}
+              />
+            ) : (
+              ''
+            )}
+          </section>
+        </section>
       </div>
       <footer>
         <span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span>

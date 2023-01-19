@@ -1,25 +1,44 @@
 import React, { useState } from 'react';
+import PropTypes from "prop-types";
 
-const NewCardForm = () => {
-    
-  const [cardMessage, setCardMessage] = useState('enter card message');
+const NewCardForm = (props) => {
 
-  const updateCard = (changeEvent) => {
-    console.log(
-      'Details about the element that fired the event:',
-      changeEvent.target
-    );
-    
-    console.log('The value of that element:', changeEvent.target.value);
-    setCardMessage(changeEvent.target.value);
+  const[formFields, setFormFields] = useState({
+    message: "",
+  });
+
+  const handleMessageChange = (event)=>{
+    setFormFields({...formFields, message: event.target.value })
+  };
+
+  const handleFormSubmit = (event)=>{
+    event.preventDefault();
+
+    props.onAddCardCallback(formFields.message);
+
+    setFormFields({
+      message:"",
+    });
+
   };
 
   return (
-    <section>
-      <h2>{cardMessage}</h2>
-      <input type='text' value={cardMessage} onChange={updateCard} />
-    </section>
+    <form className="new-card-form__form" onSubmit={handleFormSubmit}>
+      <label htmlFor="message">Message:</label>
+      <input
+        name='message'
+        type='text'
+        value={formFields.message}
+        onChange={handleMessageChange}
+        required
+      />
+      <button type="submit">Submit</button>
+    </form>
   );
 };
+
+// NewCardForm.propTypes = {
+//   onAddCardCallback: PropTypes.func.isRequired,
+// };
 
 export default NewCardForm;
