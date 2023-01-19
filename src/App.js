@@ -5,42 +5,58 @@ import Board from "./components/Board";
 import BoardList from "./components/BoardList";
 import NewBoardForm from "./components/NewBoardForm";
 
+const URL = "https://ll-inspo-board-api.herokuapp.com/boards";
+
 function App() {
   const [boardsData, setBoardsData] = useState([]);
 
   // Thao
   const [selectedBoard, setSelectedBoard] = useState(null);
-  const selectBoard = (boardId) => {
-    setSelectedBoard(boardId); // tells our state, updates board id
+  const selectBoard = (board_id) => {
+    setSelectedBoard(board_id); // tells our state, updates board id
   };
 
   // DUMMY DATA
 
-  const BOARDS = [
-    {
-      board_id: 1,
-      owner: "thao",
+  // const BOARDS = [
+  //   {
+  //     board_id: 1,
+  //     owner: "thao",
 
-      title: "Live your best life",
-    },
-  ];
+  //     title: "Live your best life",
+  //   },
+  // ];
 
   // helper functions to help display title & owner, pass boardsData in instead of BOARDS
   // if any board in BOARDS id matches id of selectedBoard, give us title & owner
-  const getSelectedTitle = (BOARDS) => {
-    for (let board of BOARDS) {
-      if (board.boardId === selectedBoard) {
+  const getSelectedTitle = (boardsData) => {
+    for (let board of boardsData) {
+      if (board.board_id === selectedBoard) {
         return board.title;
       }
     }
   };
-  const getSelectedOwner = (BOARDS) => {
-    for (let board of BOARDS) {
-      if (board.boardId === selectedBoard) {
+  const getSelectedOwner = (boardsData) => {
+    for (let board of boardsData) {
+      if (board.board_id === selectedBoard) {
         return board.owner;
       }
     }
   };
+
+  // Thao get all boards
+  const getAllBoardsApi = async () => {
+    try {
+      const response = await axios.get(`${URL}`);
+      setBoardsData(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getAllBoardsApi();
+  }, []);
 
   // no selected board when on website
   // const [selectedBoardLabel, setSelectedBoardLabel] = useState("Select a board from the board list!");
@@ -106,7 +122,7 @@ function App() {
           <section id="view-all-boards">
             <h2>Boards</h2>
             {/* <BoardList boardsData={boardsData} onSelectBoard={selectBoard} /> */}
-            <BoardList boardsData={BOARDS} onSelectBoard={selectBoard} />
+            <BoardList boardsData={boardsData} onSelectBoard={selectBoard} />
           </section>
           <section id="selected-board">
             <h2>Selected Board</h2>
@@ -132,8 +148,8 @@ function App() {
           </section>
         </section>
         <Board
-          title={getSelectedTitle(BOARDS)}
-          owner={getSelectedOwner(BOARDS)}
+          title={getSelectedTitle(boardsData)}
+          owner={getSelectedOwner(boardsData)}
           // cardsData={cardsData}
         />
       </div>
