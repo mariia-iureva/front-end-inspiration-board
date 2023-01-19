@@ -38,9 +38,9 @@ function App() {
       });
   };
 
-  const getAllCards = (selectedBoardObj) => {
-    axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`)
+  const getAllCards = (boardId) => {
+      axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${boardId}/cards`)
       .then((response) => {
         setCardsData(response.data);
       })
@@ -82,11 +82,11 @@ function App() {
   //   // this function should change the visiblity of the Board component based on board selection
   // }
 
-  // const selectBoard = useCallback((boardId) => {
-  //   setSelectedBoard(boardId);
-  // },
-  // [setSelectedBoard],
-  // );
+  const selectBoard = useCallback((board_id) => {
+    setSelectedBoard(board_id);
+  },
+  [setSelectedBoard],
+  );
 
   const selectedBoardObj = useMemo(
     () => {
@@ -101,6 +101,13 @@ function App() {
   useEffect(() => {
     getAllBoards();
   }, []);
+
+  useEffect(() => {
+    if (!selectedBoard) {
+      return;
+    }
+    getAllCards(selectedBoard.board_id);
+  }, [selectedBoard])
  
   return (
     <div className="page__container">
@@ -138,7 +145,8 @@ function App() {
           </section>
         </section>
         <Board
-        cardsData={cardsData} selectedBoardObj={selectedBoardObj}
+        cardsData={cardsData} 
+        selectedBoardObj={selectedBoardObj}
 
         // in the CardList??
         //    onDelete={deleteCard}
