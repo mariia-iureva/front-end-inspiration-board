@@ -90,23 +90,23 @@ function App() {
   // }, []);
 
   return (
-    <div className='page__container'>
-      <div className='content__container'>
-        <header className='App-header'>
+    <div className="page__container">
+      <div className="content__container">
+        <header className="App-header">
           <h1>Leaping Lizards Inspiration Board</h1>
         </header>
-        <section className='boards__container'>
-          <section id='view-all-boards'>
+        <section className="boards__container">
+          <section id="view-all-boards">
             <h2>Boards</h2>
             {/* <BoardList boardsData={boardsData}/> */}
           </section>
-          <section id='selected-board'>
+          <section id="selected-board">
             <h2>Selected Board</h2>
           </section>
-          <section className='new-board-form__container'>
+          <section className="new-board-form__container">
             <h2>Create a New Board</h2>
             {boardFormVisibility ? (
-            <NewBoardForm onAddBoardCallback={addBoard} />
+              <NewBoardForm onAddBoardCallback={addBoard} />
             ) : (
               ""
             )}
