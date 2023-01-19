@@ -1,25 +1,57 @@
 import React, { useState } from 'react';
+import PropTypes from "prop-types";
 
-const NewCardForm = () => {
-    
-  const [cardMessage, setCardMessage] = useState('enter card message');
+const NewCardForm = ({onAddCardCallback}) => {
 
-  const updateCard = (changeEvent) => {
-    console.log(
-      'Details about the element that fired the event:',
-      changeEvent.target
-    );
-    
-    console.log('The value of that element:', changeEvent.target.value);
-    setCardMessage(changeEvent.target.value);
+  const[formFields, setFormFields] = useState({
+    message: "",
+    likes_count: 0
+    //alt -- likesCount:props.likesCount
+  });
+
+  const handleLikesChange = (event)=>{
+    setFormFields({...formFields, likes_count: event.target.value})
   };
 
+  const handleMessageChange = (event)=>{
+    setFormFields({...formFields, likes_count: event.target.value})
+  };
+
+  const handleFormSubmit = (event)=>{
+    event.preventDefault();
+
+    onAddCardCallback(formFields.message, formFields.likes_count);
+
+    setFormFields({
+      message:"",
+      likes_count: "",
+    });
+
+  };
+
+
   return (
-    <section>
-      <h2>{cardMessage}</h2>
-      <input type='text' value={cardMessage} onChange={updateCard} />
-    </section>
+    <form className="new-card-form__form" onSubmit={handleFormSubmit}>
+      <label htmlFor="cardTitle">Title:</label>
+      <input
+        name="cardTitle"
+        value={formFields.title}
+        onChange={handleMessageChange}
+        required
+      />
+      <label htmlFor="boardOwner">Owner:</label>
+      <button
+        name="likesButton"
+        value={formFields.likes_count}
+        onClick={handleLikesChange}
+      />
+      <button type="submit">Submit</button>
+    </form>
   );
+};
+
+NewCardForm.propTypes = {
+  onAddCardCallback: PropTypes.func.isRequired,
 };
 
 export default NewCardForm;
