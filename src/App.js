@@ -19,7 +19,7 @@ function App() {
       .post(`${process.env.REACT_APP_BACKEND_URL}/boards`, { title, owner })
       .then((result) => {
         const newBoard = {
-          boardId: result.data.board.board_id,
+          board_id: result.data.board.board_id,
           title: result.data.board.title,
           owner: result.data.board.owner,
         };
@@ -29,7 +29,6 @@ function App() {
   };
 
   const addCard = (message) => {
-    console.log(selectedBoard.boardId);
     axios
       .post(
         `${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`,
@@ -37,10 +36,10 @@ function App() {
       )
       .then((result) => {
         const newCard = {
-          cardId: result.data.card.card_id,
+          card_id: result.data.card.id,
           message: result.data.card.message,
-          likesCount: result.data.card.likes_count,
-          boardId: result.data.card.board_id,
+          likes_count: result.data.card.likes_count,
+          board_id: result.data.card.board_id,
         };
         setCardsData([...cardsData, newCard]);
       })
@@ -63,7 +62,6 @@ function App() {
       .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${boardId}/cards`)
       .then((response) => {
         console.log(response.data);
-        // added .cards here!!!
         setCardsData(response.data.cards);
       })
       .catch((error) => {
@@ -82,13 +80,6 @@ function App() {
   useEffect(() => {
     getAllBoards();
   }, []);
-
-  // useEffect(() => {
-  //   if (!selectedBoard) {
-  //     return;
-  //   }
-  //   getAllCards(selectedBoard.board_id);
-  // }, [selectedBoard]);
 
   // const deleteCard = (cardId) => {
   //   axios
@@ -123,7 +114,6 @@ function App() {
   //   // this function should change the visiblity of the Board component based on board selection
   // }
 
-  // finished this previously commented part with Matt's help!!
   const selectBoard = useCallback(
     (boardId) => {
       setSelectedBoard(boardId);
@@ -175,13 +165,10 @@ function App() {
             <Board
               cardsData={cardsData}
               selectedBoardObj={selectedBoardObj}
+              onAddCardCallback={addCard}
               //    onDelete={deleteCard}
               //    onLike={likeCard}
             />
-          </section>
-          <section className="new-card-form__container">
-            {/* <h2>add card:</h2> */}
-            <NewCardForm onAddCardCallback={addCard} />
           </section>
         </section>
       </div>

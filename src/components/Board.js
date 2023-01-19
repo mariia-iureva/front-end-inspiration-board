@@ -1,7 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import CardList from './CardList';
-// import NewCardForm from './NewCardForm';
+import NewCardForm from './NewCardForm';
 import './Board.css';
 
 const Board = (props) => {
@@ -13,7 +13,8 @@ const Board = (props) => {
                 cardsData={props.cardsData}
               />
             </section>
-            {/* <NewCardForm postNewCard={props.postNewCard}/> */}
+            <h2>Create a New Card</h2>
+            <NewCardForm onAddCardCallback={props.addCard} />
         </section>
     );
 };
