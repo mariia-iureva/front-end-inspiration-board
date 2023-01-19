@@ -4,6 +4,7 @@ import "./App.css";
 import Board from "./components/Board";
 import BoardList from "./components/BoardList";
 import NewBoardForm from "./components/NewBoardForm";
+import NewCardForm from "./components/NewCardForm";
 
 function App() {
   const [boardsData, setBoardsData] = useState([]);
@@ -23,6 +24,24 @@ function App() {
           owner: result.data.board.owner,
         };
         setBoardsData([...boardsData, newBoard]);
+      })
+      .catch((error) => console.log(error.response.data));
+  };
+
+  const addCard = (message) => {
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoard.boardId}/cards`,
+        { message }
+      )
+      .then((result) => {
+        const newCard = {
+          cardId: result.data.card.card_id,
+          message: result.data.card.message,
+          likesCount: result.data.card.likes_count,
+          boardId: result.data.card.board_id,
+        };
+        setCardsData([...cardsData, newCard]);
       })
       .catch((error) => console.log(error.response.data));
   };
@@ -161,14 +180,20 @@ function App() {
             </button>
           </section>
         </section>
-        <Board
-          cardsData={cardsData}
-          selectedBoardObj={selectedBoardObj}
-
-          // in the CardList??
-          //    onDelete={deleteCard}
-          //    onLike={likeCard}
-        />
+        <section className="cards__container">
+          <section id="view-all-cards">
+            <Board
+              cardsData={cardsData}
+              selectedBoardObj={selectedBoardObj}
+              //    onDelete={deleteCard}
+              //    onLike={likeCard}
+            />
+          </section>
+          <section className="new-card-form__container">
+            {/* <h2>add card:</h2> */}
+            <NewCardForm onAddCardCallback={addCard} />: ( "" )
+          </section>
+        </section>
       </div>
       <footer>
         <span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span>
