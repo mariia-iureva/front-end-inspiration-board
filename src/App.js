@@ -38,9 +38,9 @@ function App() {
       });
   };
 
-  const getAllCards = (boardId) => {
+  const getAllCards = (selectedBoardObj) => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${boardId}/cards`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`)
       .then((response) => {
         setCardsData(response.data);
       })
@@ -49,44 +49,44 @@ function App() {
       });
   };
 
-  const deleteCard = (cardId) => {
-    axios
-      .delete(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
-      .then(() => {
-        const newCards = cardsData.filter((card) => card.id !== cardId);
-        setCardsData(newCards);
-      })
-      .catch((error) => {
-        console.error(error.response.data.message);
-      });
-  };
+  // const deleteCard = (cardId) => {
+  //   axios
+  //     .delete(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
+  //     .then(() => {
+  //       const newCards = cardsData.filter((card) => card.id !== cardId);
+  //       setCardsData(newCards);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error.response.data.message);
+  //     });
+  // };
 
-  const likeCard = (cardId) => {
-    axios
-      .patch(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
-      .then((result) => {
-        const newCards = [...cardsData];
-        for (const card of newCards) {
-          if (card.card_id === cardId) {
-            card.likes_count = result.data.likes_count;
-          }
-        }
-        setCardsData(newCards);
-      })
-      .catch((error) => {
-        console.error(error.response.data.message);
-      });
-  };
+  // const likeCard = (cardId) => {
+  //   axios
+  //     .patch(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
+  //     .then((result) => {
+  //       const newCards = [...cardsData];
+  //       for (const card of newCards) {
+  //         if (card.card_id === cardId) {
+  //           card.likes_count = result.data.likes_count;
+  //         }
+  //       }
+  //       setCardsData(newCards);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error.response.data.message);
+  //     });
+  // };
 
   // const boardComponentVisibility = () => {
   //   // this function should change the visiblity of the Board component based on board selection
   // }
 
-  const selectBoard = useCallback((boardId) => {
-    setSelectedBoard(boardId);
-  },
-  [setSelectedBoard],
-  );
+  // const selectBoard = useCallback((boardId) => {
+  //   setSelectedBoard(boardId);
+  // },
+  // [setSelectedBoard],
+  // );
 
   const selectedBoardObj = useMemo(
     () => {
@@ -115,7 +115,7 @@ function App() {
           </section>
           <section id="selected-board">
             <h2>Selected Board</h2>
-            {selectedBoardObj?.title || 'Select a board'}
+            <p>{selectedBoardObj?.title || 'Select a board'} - {selectedBoardObj?.owner}</p>
           </section>
           <section className="new-board-form__container">
             <h2>Create a New Board</h2>
@@ -138,7 +138,7 @@ function App() {
           </section>
         </section>
         <Board
-        // cardsData={cardsData}
+        cardsData={cardsData} selectedBoardObj={selectedBoardObj}
 
         // in the CardList??
         //    onDelete={deleteCard}
