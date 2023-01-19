@@ -1,9 +1,10 @@
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import axios from 'axios';
-import './App.css';
-import Board from './components/Board';
-import BoardList from './components/BoardList';
-import NewBoardForm from './components/NewBoardForm';
+import React, { useEffect, useState, useCallback, useMemo } from "react";
+import axios from "axios";
+import "./App.css";
+import Board from "./components/Board";
+import BoardList from "./components/BoardList";
+import NewBoardForm from "./components/NewBoardForm";
+import NewCardForm from "./components/NewCardForm";
 
 function App() {
   const [boardsData, setBoardsData] = useState([]);
@@ -27,6 +28,25 @@ function App() {
       .catch((error) => console.log(error.response.data));
   };
 
+  const addCard = (message) => {
+    console.log(selectedBoard.boardId);
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`,
+        { message }
+      )
+      .then((result) => {
+        const newCard = {
+          cardId: result.data.card.card_id,
+          message: result.data.card.message,
+          likesCount: result.data.card.likes_count,
+          boardId: result.data.card.board_id,
+        };
+        setCardsData([...cardsData, newCard]);
+      })
+      .catch((error) => console.log(error.response.data));
+  };
+
   const getAllBoards = () => {
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/boards`)
@@ -39,15 +59,36 @@ function App() {
   };
 
   const getAllCards = (boardId) => {
-      axios
+    axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${boardId}/cards`)
       .then((response) => {
-        setCardsData(response.data);
+        console.log(response.data);
+        // added .cards here!!!
+        setCardsData(response.data.cards);
       })
       .catch((error) => {
         console.error(error.response.data.message);
       });
   };
+
+  const selectedBoardObj = useMemo(() => {
+    if (!selectedBoard || !boardsData?.length) {
+      return undefined;
+    }
+    console.log(boardsData);
+    return boardsData.find((board) => board.board_id === selectedBoard);
+  }, [boardsData, selectedBoard]);
+
+  useEffect(() => {
+    getAllBoards();
+  }, []);
+
+  // useEffect(() => {
+  //   if (!selectedBoard) {
+  //     return;
+  //   }
+  //   getAllCards(selectedBoard.board_id);
+  // }, [selectedBoard]);
 
   // const deleteCard = (cardId) => {
   //   axios
@@ -82,33 +123,15 @@ function App() {
   //   // this function should change the visiblity of the Board component based on board selection
   // }
 
-  const selectBoard = useCallback((board_id) => {
-    setSelectedBoard(board_id);
-  },
-  [setSelectedBoard],
-  );
-
-  const selectedBoardObj = useMemo(
-    () => {
-      if (!selectedBoard || !boardsData?.length) {
-        return undefined;
-      }
-      return boardsData.find(board => board.board_id === selectedBoard);
+  // finished this previously commented part with Matt's help!!
+  const selectBoard = useCallback(
+    (boardId) => {
+      setSelectedBoard(boardId);
+      getAllCards(boardId);
     },
-    [boardsData, selectedBoard],
+    [setSelectedBoard]
   );
 
-  useEffect(() => {
-    getAllBoards();
-  }, []);
-
-  useEffect(() => {
-    if (!selectedBoard) {
-      return;
-    }
-    getAllCards(selectedBoard.board_id);
-  }, [selectedBoard])
- 
   return (
     <div className="page__container">
       <div className="content__container">
@@ -118,11 +141,14 @@ function App() {
         <section className="boards__container">
           <section id="view-all-boards">
             <h2>Boards</h2>
-            <BoardList boardsData={boardsData} onSelectBoard={setSelectedBoard} />
+            <BoardList boardsData={boardsData} onSelectBoard={selectBoard} />
           </section>
           <section id="selected-board">
             <h2>Selected Board</h2>
-            <p>{selectedBoardObj?.title || 'Select a board'} - {selectedBoardObj?.owner}</p>
+            <p>
+              {selectedBoardObj?.title || "Select a board"} -{" "}
+              {selectedBoardObj?.owner}
+            </p>
           </section>
           <section className="new-board-form__container">
             <h2>Create a New Board</h2>
@@ -144,16 +170,24 @@ function App() {
             </button>
           </section>
         </section>
-        <Board
-        cardsData={cardsData} 
-        selectedBoardObj={selectedBoardObj}
-
-        // in the CardList??
-        //    onDelete={deleteCard}
-        //    onLike={likeCard}
-        />
+        <section className="cards__container">
+          <section id="view-all-cards">
+            <Board
+              cardsData={cardsData}
+              selectedBoardObj={selectedBoardObj}
+              //    onDelete={deleteCard}
+              //    onLike={likeCard}
+            />
+          </section>
+          <section className="new-card-form__container">
+            {/* <h2>add card:</h2> */}
+            <NewCardForm onAddCardCallback={addCard} />
+          </section>
+        </section>
       </div>
-      <footer><span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span></footer>
+      <footer>
+        <span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span>
+      </footer>
     </div>
   );
 }
