@@ -66,7 +66,7 @@ function App() {
 
   const selectedBoardObj = useMemo(
     () => {
-      if (!selectedBoard || !boardsData || !boardsData.length) {
+      if (!selectedBoard || !boardsData?.length) {
         return undefined;
       }
       return boardsData.find(board => board.board_id === selectedBoard);
@@ -87,12 +87,11 @@ function App() {
         <section className='boards__container'>
           <section id='view-all-boards'>
             <h2>Boards</h2>
-            <BoardList boardsData={boardsData} onSelectBoard={selectBoard} />
+            <BoardList boardsData={boardsData} onSelectBoard={setSelectedBoard} />
           </section>
           <section id='selected-board'>
             <h2>Selected Board</h2>
-            <p>This is where we'll put the title of a selected board</p>
-            {/* {selectedBoardObj.title} */}
+            {selectedBoardObj?.title || 'Select a board'}
           </section>
           <section className='new-board-form__container'>
             <h2>Create a New Board</h2>
