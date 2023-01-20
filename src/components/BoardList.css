@@ -7,7 +7,12 @@
     overflow: scroll;
 }
 
+li {
+    padding: .5em;
+}
+
 li:hover {
     cursor: pointer;
     background-color: lightgrey;
+    font-weight: bold;
 }

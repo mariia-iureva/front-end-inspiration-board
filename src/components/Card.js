@@ -1,15 +1,15 @@
-import React from "react";
-import "./Card.css";
-import PropTypes from "prop-types";
+import React from 'react';
+import './Card.css';
+import PropTypes from 'prop-types';
 
 const Card = (props) => {
-  // const onLikeButtonClick = () => {
-  //   props.onLike(props.cardId);
-  // };
+  const onLikeButtonClick = () => {
+    props.likeCard(props.card_id);
+  };
 
-  // const onDeleteButtonClick = () => {
-  //   props.onDelete(props.cardId);
-  // };
+  const onDeleteButtonClick = () => {
+    props.deleteCard(props.card_id);
+  };
 
   //   const updatedMessage = {
   //     id: props.id,
@@ -21,27 +21,25 @@ const Card = (props) => {
   //   props.onLikeMessage(updatedMessage.id);
   // };
 
-  // const heartColor = props.liked ? "❤️" : "🤍";
+  // const heartColor = props.liked ? '❤️' : '🤍';
 
   return (
-    <div className="card-entry">
-      <h3 className="entry-message">{props.message}</h3>
-      {/* section to allow for future style choices */}
-      {/* example <section className = "entry-bubble "/> */}
-      <section className="cards_buttons">
+    <div className='card-entry'>
+      <p className='card-entry-message'>{props.message}</p>
+      <section className='cards_buttons'>
         <p> {props.likes_count} 💕 </p>
         <button
-          className="like_button"
-          type="button"
-          // onClick={onLikeButtonClick}
+          className='like_button'
+          type='button'
+          onClick={onLikeButtonClick}
         >
           +1
         </button>
 
         <button
-          className="delete_button"
-          type="button"
-          // onClick={onDeleteButtonClick}
+          className='delete_button'
+          type='button'
+          onClick={onDeleteButtonClick}
         >
           Delete
         </button>

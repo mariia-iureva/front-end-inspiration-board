@@ -43,7 +43,7 @@ const NewBoardForm = ({ onAddBoardCallback }) => {
         onChange={handleOwnerChange}
         required
       />
-      <button type='submit'>Submit</button>
+      <button className='new-board-form__submit' type='submit'>Submit</button>
     </form>
   );
 };

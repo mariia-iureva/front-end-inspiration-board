@@ -81,38 +81,39 @@ function App() {
     getAllBoards();
   }, []);
 
-  // const deleteCard = (cardId) => {
-  //   axios
-  //     .delete(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
-  //     .then(() => {
-  //       const newCards = cardsData.filter((card) => card.id !== cardId);
-  //       setCardsData(newCards);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error.response.data.message);
-  //     });
-  // };
+  const deleteCard = (cardId) => {
+    axios
+      .delete(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
+      .then(() => {
+        const newCards = cardsData.filter((card) => card.id !== cardId);
+        setCardsData(newCards);
+      })
+      .catch((error) => {
+        console.error(error.response.data.message);
+      });
+  };
 
-  // const likeCard = (cardId) => {
-  //   axios
-  //     .patch(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
-  //     .then((result) => {
-  //       const newCards = [...cardsData];
-  //       for (const card of newCards) {
-  //         if (card.card_id === cardId) {
-  //           card.likes_count = result.data.likes_count;
-  //         }
-  //       }
-  //       setCardsData(newCards);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error.response.data.message);
-  //     });
-  // };
+  const likeCard = (cardId) => {
+    axios
+      .patch(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
+      .then((result) => {
+        const newCards = [...cardsData];
+        for (const card of newCards) {
+          if (card.id === cardId) {
+            card.likes_count = result.data.likes_count;
+          }
+        }
+        setCardsData(newCards);
+      })
+      .catch((error) => {
+        console.error(error.response.data.message);
+      });
+  };
 
   const selectBoard = useCallback(
     (boardId) => {
       setSelectedBoard(boardId);
+      setCardsData([]);
       getAllCards(boardId);
       setBoardComponentVisibility(true);
     },
@@ -133,8 +134,7 @@ function App() {
           <section id="selected-board">
             <h2>Selected Board</h2>
             <p>
-              {selectedBoardObj?.title || "Select a board"} -{" "}
-              {selectedBoardObj?.owner}
+              {selectedBoardObj ? `${selectedBoardObj.title} - ${selectedBoardObj.owner}` : 'Select a board'}
             </p>
           </section>
           <section className="new-board-form__container">
@@ -157,21 +157,17 @@ function App() {
             </button>
           </section>
         </section>
-        <section className="cards__container">
-          <section id="view-all-cards">
-            {boardComponentVisibility ? (
-              <Board
-                cardsData={cardsData}
-                selectedBoardObj={selectedBoardObj}
-                onAddCardCallback={addCard}
-                //    onDelete={deleteCard}
-                //    onLike={likeCard}
-              />
-            ) : (
-              ""
-            )}
-          </section>
-        </section>
+          {boardComponentVisibility ? (
+            <Board
+              cardsData={cardsData}
+              selectedBoardObj={selectedBoardObj}
+              addCard={addCard}
+              deleteCard={deleteCard}
+              likeCard={likeCard}
+            />
+          ) : (
+            ''
+          )}
       </div>
       <footer>
         <span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span>

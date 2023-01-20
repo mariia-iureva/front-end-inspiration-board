@@ -6,16 +6,17 @@ import './Board.css';
 
 const Board = (props) => {
     return (
-        <section className='cards__container'>
-            <section>
-              <h2>{props.selectedBoardObj?.title}</h2>
-              <CardList 
-                cardsData={props.cardsData}
-              />
-            </section>
-            <h2>Create a New Card</h2>
-            <NewCardForm onAddCardCallback={props.addCard} />
+      <section className='cards__container'>
+        <section>
+          <h2>{props.selectedBoardObj?.title}</h2>
+          <CardList 
+            cardsData={props.cardsData}
+            likeCard={props.likeCard}
+            deleteCard={props.deleteCard}
+          />
         </section>
+        <NewCardForm addCard={props.addCard} />
+      </section>
     );
 };
 
