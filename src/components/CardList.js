@@ -8,7 +8,7 @@ const CardList = (props) => {
         <div className='card-entries__container'>
             {props.cardsData.map((card) => (
                 <Card 
-                    key={`${card.card_id}-${card.board_id}`}
+                    key={`${card.id}-${card.board_id}`}
                     card_id={card.id}
                     board_id={card.board_id}
                     likes_count={card.likes_count}
