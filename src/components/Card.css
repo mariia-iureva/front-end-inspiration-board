@@ -6,5 +6,24 @@
     justify-content: center;
     min-height: 200px;
     padding: 2rem;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 4px 8px 0 rgba(240, 232, 232, 0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
   }
+
+.card-entry-message {
+  font-size: 1.4rem;
+  text-align: center;
+  word-break: break-word;
+}
+
+.cards_buttons {
+  display: flex;
+  justify-content: space-evenly;
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+}
+
+button {
+  border: none;
+  padding: .5em;
+}
