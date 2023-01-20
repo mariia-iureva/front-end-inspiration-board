@@ -126,6 +126,28 @@ function App() {
     [setSelectedBoard]
   );
 
+  const sortCards = (category) => {
+    if (category === "id") {
+      setCardsData([
+        ...cardsData.sort(function (a, b) {
+          return a.id - b.id;
+        }),
+      ]);
+    } else if (category === "abc") {
+      setCardsData([
+        ...cardsData.sort(function (a, b) {
+          return a.message > b.message ? 1 : -1;
+        }),
+      ]);
+    } else if (category === "likes") {
+      setCardsData([
+        ...cardsData.sort(function (a, b) {
+          return b.likes_count - a.likes_count;
+        }),
+      ]);
+    }
+  };
+
   return (
     <div className="page__container">
       <div className="content__container">
@@ -173,6 +195,7 @@ function App() {
             addCard={addCard}
             deleteCard={deleteCard}
             likeCard={likeCard}
+            sortCards={sortCards}
           />
         ) : (
           ""
