@@ -11,7 +11,8 @@ function App() {
   const [selectedBoard, setSelectedBoard] = useState(null);
   const [cardsData, setCardsData] = useState([]);
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
-  const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
+  const [boardComponentVisibility, setBoardComponentVisibility] =
+    useState(false);
 
   const getAllBoards = () => {
     axios
@@ -124,6 +125,28 @@ function App() {
       });
   };
 
+  const sortCards = (category) => {
+    if (category === "id") {
+      setCardsData([
+        ...cardsData.sort(function (a, b) {
+          return a.id - b.id;
+        }),
+      ]);
+    } else if (category === "abc") {
+      setCardsData([
+        ...cardsData.sort(function (a, b) {
+          return a.message > b.message ? 1 : -1;
+        }),
+      ]);
+    } else if (category === "likes") {
+      setCardsData([
+        ...cardsData.sort(function (a, b) {
+          return b.likes_count - a.likes_count;
+        }),
+      ]);
+    }
+  };
+
   return (
     <div className="page__container">
       <div className="content__container">
@@ -171,6 +194,7 @@ function App() {
             addCard={addCard}
             deleteCard={deleteCard}
             likeCard={likeCard}
+            sortCards={sortCards}
           />
         ) : (
           ""
