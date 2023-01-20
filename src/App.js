@@ -12,38 +12,6 @@ function App() {
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
   const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
 
-  const addBoard = (title, owner) => {
-    axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/boards`, { title, owner })
-      .then((result) => {
-        const newBoard = {
-          board_id: result.data.board.board_id,
-          title: result.data.board.title,
-          owner: result.data.board.owner,
-        };
-        setBoardsData([...boardsData, newBoard]);
-      })
-      .catch((error) => console.log(error.response.data));
-  };
-
-  const addCard = (message) => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`,
-        { message }
-      )
-      .then((result) => {
-        const newCard = {
-          card_id: result.data.card.id,
-          message: result.data.card.message,
-          likes_count: result.data.card.likes_count,
-          board_id: result.data.card.board_id,
-        };
-        setCardsData([...cardsData, newCard]);
-      })
-      .catch((error) => console.log(error.response.data));
-  };
-
   const getAllBoards = () => {
     axios
       .get(`${process.env.REACT_APP_BACKEND_URL}/boards`)
@@ -79,6 +47,48 @@ function App() {
     getAllBoards();
   }, []);
 
+  const selectBoard = useCallback(
+    (boardId) => {
+      setSelectedBoard(boardId);
+      setCardsData([]);
+      getAllCards(boardId);
+      setBoardComponentVisibility(true);
+    },
+    [setSelectedBoard]
+  );
+
+  const addBoard = (title, owner) => {
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/boards`, { title, owner })
+      .then((result) => {
+        const newBoard = {
+          board_id: result.data.board.board_id,
+          title: result.data.board.title,
+          owner: result.data.board.owner,
+        };
+        setBoardsData([...boardsData, newBoard]);
+      })
+      .catch((error) => console.log(error.response.data));
+  };
+
+  const addCard = (message) => {
+    axios
+      .post(
+        `${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`,
+        { message }
+      )
+      .then((result) => {
+        const newCard = {
+          card_id: result.data.card.id,
+          message: result.data.card.message,
+          likes_count: result.data.card.likes_count,
+          board_id: result.data.card.board_id,
+        };
+        setCardsData([...cardsData, newCard]);
+      })
+      .catch((error) => console.log(error.response.data));
+  };
+
   const deleteCard = (cardId) => {
     axios
       .delete(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
@@ -107,16 +117,6 @@ function App() {
         console.error(error.response.data.message);
       });
   };
-
-  const selectBoard = useCallback(
-    (boardId) => {
-      setSelectedBoard(boardId);
-      setCardsData([]);
-      getAllCards(boardId);
-      setBoardComponentVisibility(true);
-    },
-    [setSelectedBoard]
-  );
 
   return (
     <div className="page__container">
