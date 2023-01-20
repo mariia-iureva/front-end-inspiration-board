@@ -73,6 +73,9 @@ input {
   box-sizing: initial;
   border: 0;
   border-radius: 5px;
+}
+
+select, input {
   padding: .4em;
 }
 
