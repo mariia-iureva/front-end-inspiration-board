@@ -1,1 +1,1 @@
-web: gunicorn 'app:create_app()'
+web: node app.js
