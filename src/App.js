@@ -4,18 +4,18 @@ import "./App.css";
 import Board from "./components/Board";
 import BoardList from "./components/BoardList";
 import NewBoardForm from "./components/NewBoardForm";
+import NewCardForm from "./components/NewCardForm";
 
 function App() {
   const [boardsData, setBoardsData] = useState([]);
   const [selectedBoard, setSelectedBoard] = useState(null);
   const [cardsData, setCardsData] = useState([]);
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
-  const [boardComponentVisibility, setBoardComponentVisibility] =
-    useState(false);
+  const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
 
   const getAllBoards = () => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/boards`)
+      .get(`https://ll-inspo-board-api.herokuapp.com/boards`)
       .then((response) => {
         setBoardsData(response.data);
       })
@@ -26,7 +26,7 @@ function App() {
 
   const getAllCards = (boardId) => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${boardId}/cards`)
+      .get(`https://ll-inspo-board-api.herokuapp.com/boards/${boardId}/cards`)
       .then((response) => {
         console.log(response.data);
         setCardsData(response.data.cards);
@@ -60,7 +60,7 @@ function App() {
 
   const addBoard = (title, owner) => {
     axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/boards`, { title, owner })
+      .post(`https://ll-inspo-board-api.herokuapp.com/boards`, { title, owner })
       .then((result) => {
         const newBoard = {
           board_id: result.data.board.board_id,
@@ -75,24 +75,28 @@ function App() {
   const addCard = (message) => {
     axios
       .post(
-        `${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`,
+        `https://ll-inspo-board-api.herokuapp.com/boards/${selectedBoardObj.board_id}/cards`,
+
         { message }
       )
       .then((result) => {
+        console.log(result);
         const newCard = {
-          card_id: result.data.card.id,
+          id: result.data.card.id,
           message: result.data.card.message,
           likes_count: result.data.card.likes_count,
           board_id: result.data.card.board_id,
         };
-        setCardsData([...cardsData, newCard]);
+        setCardsData([...cardsData, newCard], () => {
+          console.log(this.state.cardsData);
+        });
       })
       .catch((error) => console.log(error.response.data));
   };
 
   const deleteCard = (cardId) => {
     axios
-      .delete(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
+      .delete(`https://ll-inspo-board-api.herokuapp.com/cards/${cardId}`)
       .then(() => {
         const newCards = cardsData.filter((card) => card.id !== cardId);
         setCardsData(newCards);
@@ -104,11 +108,12 @@ function App() {
 
   const likeCard = (cardId) => {
     axios
-      .patch(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}/like`)
+      .patch(`https://ll-inspo-board-api.herokuapp.com/cards/${cardId}/like`)
       .then((result) => {
         const newCards = [...cardsData];
         for (const card of newCards) {
-          if (card.id === result.id) {
+          if (card.id === cardId) {
+            console.log(result);
             card.likes_count = result.data.likes_count;
           }
         }
@@ -133,7 +138,9 @@ function App() {
           <section id="selected-board">
             <h2>Selected Board</h2>
             <p>
-              {selectedBoardObj ? `${selectedBoardObj.title} - ${selectedBoardObj.owner}` : 'Select a board'}
+              {selectedBoardObj
+                ? `${selectedBoardObj.title} - ${selectedBoardObj.owner}`
+                : "Select a board"}
             </p>
           </section>
           <section className="new-board-form__container">
@@ -156,17 +163,18 @@ function App() {
             </button>
           </section>
         </section>
-          {boardComponentVisibility ? (
-            <Board
-              cardsData={cardsData}
-              selectedBoardObj={selectedBoardObj}
-              addCard={addCard}
-              deleteCard={deleteCard}
-              likeCard={likeCard}
-            />
-          ) : (
-            ''
-          )}
+
+        {boardComponentVisibility ? (
+          <Board
+            cardsData={cardsData}
+            selectedBoardObj={selectedBoardObj}
+            addCard={addCard}
+            deleteCard={deleteCard}
+            likeCard={likeCard}
+          />
+        ) : (
+          ""
+        )}
       </div>
       <footer>
         <span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span>
