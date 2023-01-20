@@ -11,18 +11,6 @@ const Card = (props) => {
     props.deleteCard(props.card_id);
   };
 
-  //   const updatedMessage = {
-  //     id: props.id,
-  //     message: props.message,
-  //     liked: !props.liked,
-  //     board_id: props.board_id,
-  //   };
-
-  //   props.onLikeMessage(updatedMessage.id);
-  // };
-
-  // const heartColor = props.liked ? '❤️' : '🤍';
-
   return (
     <div className='card-entry'>
       <p className='card-entry-message'>{props.message}</p>

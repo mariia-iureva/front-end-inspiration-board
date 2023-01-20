@@ -9,7 +9,6 @@ function App() {
   const [boardsData, setBoardsData] = useState([]);
   const [selectedBoard, setSelectedBoard] = useState(null);
   const [cardsData, setCardsData] = useState([]);
-
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
   const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
 
@@ -94,11 +93,11 @@ function App() {
 
   const likeCard = (cardId) => {
     axios
-      .patch(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
+      .patch(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}/like`)
       .then((result) => {
         const newCards = [...cardsData];
         for (const card of newCards) {
-          if (card.id === cardId) {
+          if (card.id === result.id) {
             card.likes_count = result.data.likes_count;
           }
         }
