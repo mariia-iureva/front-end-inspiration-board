@@ -14,5 +14,6 @@ li {
 li:hover {
     cursor: pointer;
     background-color: lightgrey;
-    font-weight: bold;
+    transition: 0.3s all ease-in-out;
+    color: #555;
 }
