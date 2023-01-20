@@ -1,10 +1,12 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Quattrocento:wght@700&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
 
 body {
-  color: #333333;
+  color: #454545;
   margin: 1rem;
   background-color: rgb(233, 230, 225);
+  font-family: 'Nunito', sans-serif;
 }
 
 .page__container {
@@ -24,13 +26,13 @@ body {
 h1, h2 {
   display: inline-block;
   align-items: center;
-  font-family: 'Fjalla One';
+  font-family: 'Roboto';
   text-transform: uppercase;
   letter-spacing: .1em;
 }
 
 h1:hover, h2:hover {
-  opacity: 0.4;
+  color: #00aa95;
   transition: 0.3s all ease-in-out;
 }
 
@@ -69,6 +71,16 @@ footer {
 
 input {
   box-sizing: initial;
+  border: 0;
+  border-radius: 5px;
+}
+
+select, input {
+  padding: .4em;
+}
+
+select {
+  width: 25%;
 }
 
 .new-board-form__submit, .new-card-form__submit {
@@ -83,6 +95,13 @@ button:hover, li:hover, #hide-btn:hover {
   background-color: lightgrey;
   transition: 0.3s all ease-in-out;
   color: #555;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.1) 0 7px 13px -3px;
+  transform: translateY(-2px);
+}
+
+button:active {
+  box-shadow: #D6D6E7 0 3px 7px inset;
+  transform: translateY(2px);
 }
 
 label {

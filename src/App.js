@@ -4,7 +4,6 @@ import "./App.css";
 import Board from "./components/Board";
 import BoardList from "./components/BoardList";
 import NewBoardForm from "./components/NewBoardForm";
-import NewCardForm from "./components/NewCardForm";
 
 function App() {
   const [boardsData, setBoardsData] = useState([]);
