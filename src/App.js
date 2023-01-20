@@ -16,7 +16,7 @@ function App() {
 
   const addBoard = (title, owner) => {
     axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/boards`, { title, owner })
+      .post(`https://ll-inspo-board-api.herokuapp.com/boards`, { title, owner })
       .then((result) => {
         const newBoard = {
           board_id: result.data.board.board_id,
@@ -31,7 +31,7 @@ function App() {
   const addCard = (message) => {
     axios
       .post(
-        `${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`,
+        `https://ll-inspo-board-api.herokuapp.com/boards/${selectedBoardObj.board_id}/cards`,
         { message }
       )
       .then((result) => {
@@ -48,7 +48,7 @@ function App() {
 
   const getAllBoards = () => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/boards`)
+      .get(`https://ll-inspo-board-api.herokuapp.com/boards`)
       .then((response) => {
         setBoardsData(response.data);
       })
@@ -59,7 +59,7 @@ function App() {
 
   const getAllCards = (boardId) => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${boardId}/cards`)
+      .get(`https://ll-inspo-board-api.herokuapp.com/boards/${boardId}/cards`)
       .then((response) => {
         console.log(response.data);
         setCardsData(response.data.cards);
@@ -83,7 +83,7 @@ function App() {
 
   // const deleteCard = (cardId) => {
   //   axios
-  //     .delete(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
+  //     .delete(`https://ll-inspo-board-api.herokuapp.com/cards/${cardId}`)
   //     .then(() => {
   //       const newCards = cardsData.filter((card) => card.id !== cardId);
   //       setCardsData(newCards);
@@ -95,7 +95,7 @@ function App() {
 
   // const likeCard = (cardId) => {
   //   axios
-  //     .patch(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
+  //     .patch(`https://ll-inspo-board-api.herokuapp.com/cards/${cardId}`)
   //     .then((result) => {
   //       const newCards = [...cardsData];
   //       for (const card of newCards) {
