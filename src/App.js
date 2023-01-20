@@ -37,13 +37,16 @@ function App() {
         { message }
       )
       .then((result) => {
+        console.log(result);
         const newCard = {
-          card_id: result.data.card.id,
+          id: result.data.card.id,
           message: result.data.card.message,
           likes_count: result.data.card.likes_count,
           board_id: result.data.card.board_id,
         };
-        setCardsData([...cardsData, newCard]);
+        setCardsData([...cardsData, newCard], () => {
+          console.log(this.state.cardsData);
+        });
       })
       .catch((error) => console.log(error.response.data));
   };
@@ -97,11 +100,12 @@ function App() {
 
   const likeCard = (cardId) => {
     axios
-      .patch(`https://ll-inspo-board-api.herokuapp.com/cards/${cardId}`)
+      .patch(`https://ll-inspo-board-api.herokuapp.com/cards/${cardId}/like`)
       .then((result) => {
         const newCards = [...cardsData];
         for (const card of newCards) {
           if (card.id === cardId) {
+            console.log(result);
             card.likes_count = result.data.likes_count;
           }
         }

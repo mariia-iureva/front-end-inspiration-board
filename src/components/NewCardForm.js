@@ -21,13 +21,13 @@ const NewCardForm = (props) => {
     });
   };
 
-  const onFormSubmit = (event) => {
-    event.preventDefault();
+  // const onFormSubmit = (event) => {
+  //   event.preventDefault();
 
-    onAddCardCallback(cardMessage.message);
+  //   onAddCardCallback(cardMessage.message);
 
-    setCardMessage({ message: "" });
-  };
+  //   setCardMessage({ message: "" });
+  // };
 
   // const [cardMessage, setCardMessage] = useState('enter card message');
 
