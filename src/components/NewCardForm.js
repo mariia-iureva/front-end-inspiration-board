@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
+import './NewCardForm.css';
 
 const NewCardForm = (props) => {
 
@@ -14,7 +15,7 @@ const NewCardForm = (props) => {
   const handleFormSubmit = (event)=>{
     event.preventDefault();
 
-    props.onAddCardCallback(formFields.message);
+    props.addCard(formFields.message);
 
     setFormFields({
       message:"",
@@ -23,22 +24,25 @@ const NewCardForm = (props) => {
   };
 
   return (
-    <form className="new-card-form__form" onSubmit={handleFormSubmit}>
-      <label htmlFor="message">Message:</label>
-      <input
-        name='message'
-        type='text'
-        value={formFields.message}
-        onChange={handleMessageChange}
-        required
-      />
-      <button type="submit">Submit</button>
-    </form>
+    <section className='new-card-form__container'>
+      <h2>Create a New Card</h2>
+      <form className="new-card-form__form" onSubmit={handleFormSubmit}>
+        <label htmlFor="message">Message:</label>
+        <input
+          name='message'
+          type='text'
+          value={formFields.message}
+          onChange={handleMessageChange}
+          required
+        />
+        <button className='new-card-form__submit' type="submit">Submit</button>
+      </form>
+    </section>
   );
 };
 
 // NewCardForm.propTypes = {
-//   onAddCardCallback: PropTypes.func.isRequired,
+//   addCard: PropTypes.func.isRequired,
 // };
 
 export default NewCardForm;
