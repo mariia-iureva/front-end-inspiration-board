@@ -5,15 +5,9 @@
     max-height: 9rem;
     min-height: 9rem;
     overflow: scroll;
+    box-shadow: 0 4px 8px 0 rgba(240, 232, 232, 0.5), 0 6px 20px 0 rgba(0,0,0,0.14);
 }
 
 li {
     padding: .5em;
-}
-
-li:hover {
-    cursor: pointer;
-    background-color: lightgrey;
-    transition: 0.3s all ease-in-out;
-    color: #555;
 }

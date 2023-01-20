@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
 
 body {
-  color: rgb(33, 29, 30);
+  color: #333333;
   margin: 1rem;
   background-color: rgb(233, 230, 225);
 }
@@ -29,12 +29,20 @@ h1, h2 {
   letter-spacing: .1em;
 }
 
-#hide-btn {
+h1:hover, h2:hover {
+  opacity: 0.4;
+  transition: 0.3s all ease-in-out;
+}
+
+#hide-btn, .like_button, .delete_button {
   background-color: #fff;
-  border: 2px solid #000;
   padding: .5em;
   margin-top: 1em;
   margin-bottom: 1em;
+}
+
+#hide-btn {
+  border: 2px solid #000;
 }
 
 .boards__container {
@@ -75,4 +83,9 @@ button:hover, li:hover, #hide-btn:hover {
   background-color: lightgrey;
   transition: 0.3s all ease-in-out;
   color: #555;
+}
+
+label {
+  padding-top: 1em;
+  padding-bottom: .5em;
 }
