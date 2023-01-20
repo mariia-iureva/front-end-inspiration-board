@@ -133,8 +133,7 @@ function App() {
           <section id="selected-board">
             <h2>Selected Board</h2>
             <p>
-              {selectedBoardObj?.title || "Select a board"} -{" "}
-              {selectedBoardObj?.owner}
+              {selectedBoardObj ? `${selectedBoardObj.title} - ${selectedBoardObj.owner}` : 'Select a board'}
             </p>
           </section>
           <section className="new-board-form__container">
