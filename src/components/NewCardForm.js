@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import "./NewCardForm.css";
 
 const NewCardForm = (props) => {
   const [formFields, setFormFields] = useState({
@@ -20,34 +19,6 @@ const NewCardForm = (props) => {
       message: "",
     });
   };
-
-  // const onFormSubmit = (event) => {
-  //   event.preventDefault();
-
-  //   onAddCardCallback(cardMessage.message);
-
-  //   setCardMessage({ message: "" });
-  // };
-
-  // const [cardMessage, setCardMessage] = useState('enter card message');
-
-  // const updateCard = (changeEvent) => {
-  //   console.log(
-  //     'Details about the element that fired the event:',
-  //     changeEvent.target
-  //   );
-
-  //   console.log('The value of that element:', changeEvent.target.value);
-  //   setCardMessage(changeEvent.target.value);
-  // };
-
-  //   return (
-  //     <section>
-  //       <h2>{cardMessage}</h2>
-  //       <input type='text' value={cardMessage} onChange={updateCard} />
-  //     </section>
-  //   );
-  // };
 
   return (
     <section className="new-card-form__container">

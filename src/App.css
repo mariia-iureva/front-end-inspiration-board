@@ -1,6 +1,10 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Quattrocento:wght@700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
+
 body {
-  color: #000;
+  color: #333333;
   margin: 1rem;
+  background-color: rgb(233, 230, 225);
 }
 
 .page__container {
@@ -13,35 +17,75 @@ body {
   flex: 1 0 auto;
 }
 
-h1 {
-  display: inline-block;
-  align-items: center;
+.App-header {
+  display: flex;
 }
 
-#hide-btn {
+h1, h2 {
+  display: inline-block;
+  align-items: center;
+  font-family: 'Fjalla One';
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+h1:hover, h2:hover {
+  opacity: 0.4;
+  transition: 0.3s all ease-in-out;
+}
+
+#hide-btn, .like_button, .delete_button {
   background-color: #fff;
-  border: 2px solid #000;
   padding: .5em;
   margin-top: 1em;
   margin-bottom: 1em;
 }
 
+#hide-btn {
+  border: 2px solid #000;
+}
+
 .boards__container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  background-color: lightseagreen;
-}
-
-.new-board-form__container {
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
 }
 
 footer {
   text-align: center;
 }
 
-button:hover {
+.new-board-form__container, .new-card-form__container {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+}
+
+.new-board-form__form, .new-card-form__form {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 2em;
+  width: 100%;
+}
+
+input {
+  box-sizing: initial;
+}
+
+.new-board-form__submit, .new-card-form__submit {
+  background-color: #fff;
+  border: 2px solid #000;
+  padding: .5em;
+  margin-top: 1em;
+}
+
+button:hover, li:hover, #hide-btn:hover {
   cursor: pointer;
+  background-color: lightgrey;
+  transition: 0.3s all ease-in-out;
+  color: #555;
+}
+
+label {
+  padding-top: 1em;
+  padding-bottom: .5em;
 }
