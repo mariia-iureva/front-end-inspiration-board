@@ -1,14 +1,14 @@
-import React from "react";
-import "./Card.css";
-import PropTypes from "prop-types";
+import React from 'react';
+import './Card.css';
+import PropTypes from 'prop-types';
 
 const Card = (props) => {
   const onLikeButtonClick = () => {
-    props.onLike(props.cardId);
+    props.likeCard(props.card_id);
   };
 
   const onDeleteButtonClick = () => {
-    props.onDelete(props.cardId);
+    props.deleteCard(props.card_id);
   };
 
   //   const updatedMessage = {
@@ -21,26 +21,24 @@ const Card = (props) => {
   //   props.onLikeMessage(updatedMessage.id);
   // };
 
-  // const heartColor = props.liked ? "❤️" : "🤍";
+  // const heartColor = props.liked ? '❤️' : '🤍';
 
   return (
-    <div className="card-entry">
-      <h3 className="entry-message">{props.message}</h3>
-      {/* section to allow for future style choices */}
-      {/* example <section className = "entry-bubble "/> */}
-      <section classname="cards_buttons">
-        <p> {props.likesCount} 💕 </p>
+    <div className='card-entry'>
+      <p className='card-entry-message'>{props.message}</p>
+      <section className='cards_buttons'>
+        <p> {props.likes_count} 💕 </p>
         <button
-          className="like_button"
-          type="button"
+          className='like_button'
+          type='button'
           onClick={onLikeButtonClick}
         >
           +1
         </button>
 
         <button
-          className="delete_button"
-          type="button"
+          className='delete_button'
+          type='button'
           onClick={onDeleteButtonClick}
         >
           Delete
@@ -50,12 +48,12 @@ const Card = (props) => {
   );
 };
 
-Card.propTypes = {
-  cardId: PropTypes.number.isRequired,
-  message: PropTypes.string.isRequired,
-  likesCount: PropTypes.number.isRequired,
-  onLike: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-};
+// Card.propTypes = {
+//   cardId: PropTypes.number.isRequired,
+//   message: PropTypes.string.isRequired,
+//   likesCount: PropTypes.number.isRequired,
+//   onLike: PropTypes.func.isRequired,
+//   onDelete: PropTypes.func.isRequired,
+// };
 
 export default Card;

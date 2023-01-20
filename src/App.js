@@ -12,14 +12,15 @@ function App() {
   const [cardsData, setCardsData] = useState([]);
 
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
-  // const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
+  const [boardComponentVisibility, setBoardComponentVisibility] =
+    useState(false);
 
   const addBoard = (title, owner) => {
     axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/boards`, { title, owner })
+      .post(`https://ll-inspo-board-api.herokuapp.com/boards`, { title, owner })
       .then((result) => {
         const newBoard = {
-          boardId: result.data.board.board_id,
+          board_id: result.data.board.board_id,
           title: result.data.board.title,
           owner: result.data.board.owner,
         };
@@ -29,18 +30,31 @@ function App() {
   };
 
   const addCard = (message) => {
+<<<<<<< HEAD
     console.log(selectedBoard.boardId);
     axios
       .post(
         `${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`,
+=======
+    axios
+      .post(
+        `https://ll-inspo-board-api.herokuapp.com/boards/${selectedBoardObj.board_id}/cards`,
+>>>>>>> main
         { message }
       )
       .then((result) => {
         const newCard = {
+<<<<<<< HEAD
           cardId: result.data.card.card_id,
           message: result.data.card.message,
           likesCount: result.data.card.likes_count,
           boardId: result.data.card.board_id,
+=======
+          card_id: result.data.card.id,
+          message: result.data.card.message,
+          likes_count: result.data.card.likes_count,
+          board_id: result.data.card.board_id,
+>>>>>>> main
         };
         setCardsData([...cardsData, newCard]);
       })
@@ -49,7 +63,7 @@ function App() {
 
   const getAllBoards = () => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/boards`)
+      .get(`https://ll-inspo-board-api.herokuapp.com/boards`)
       .then((response) => {
         setBoardsData(response.data);
       })
@@ -58,23 +72,11 @@ function App() {
       });
   };
 
-  // const getAllCards = (selectedBoardObj) => {
-  //   axios
-  //     .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`)
-  //     .then((response) => {
-  //       setCardsData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error.response.data.message);
-  //     });
-  // };
-
   const getAllCards = (boardId) => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/boards/${boardId}/cards`)
+      .get(`https://ll-inspo-board-api.herokuapp.com/boards/${boardId}/cards`)
       .then((response) => {
         console.log(response.data);
-        // added .cards here!!!
         setCardsData(response.data.cards);
       })
       .catch((error) => {
@@ -94,51 +96,41 @@ function App() {
     getAllBoards();
   }, []);
 
-  // useEffect(() => {
-  //   if (!selectedBoard) {
-  //     return;
-  //   }
-  //   getAllCards(selectedBoard.board_id);
-  // }, [selectedBoard]);
+  const deleteCard = (cardId) => {
+    axios
+      .delete(`https://ll-inspo-board-api.herokuapp.com/cards/${cardId}`)
+      .then(() => {
+        const newCards = cardsData.filter((card) => card.id !== cardId);
+        setCardsData(newCards);
+      })
+      .catch((error) => {
+        console.error(error.response.data.message);
+      });
+  };
 
-  // const deleteCard = (cardId) => {
-  //   axios
-  //     .delete(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
-  //     .then(() => {
-  //       const newCards = cardsData.filter((card) => card.id !== cardId);
-  //       setCardsData(newCards);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error.response.data.message);
-  //     });
-  // };
+  const likeCard = (cardId) => {
+    axios
+      .patch(`https://ll-inspo-board-api.herokuapp.com/cards/${cardId}`)
+      .then((result) => {
+        const newCards = [...cardsData];
+        for (const card of newCards) {
+          if (card.id === cardId) {
+            card.likes_count = result.data.likes_count;
+          }
+        }
+        setCardsData(newCards);
+      })
+      .catch((error) => {
+        console.error(error.response.data.message);
+      });
+  };
 
-  // const likeCard = (cardId) => {
-  //   axios
-  //     .patch(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
-  //     .then((result) => {
-  //       const newCards = [...cardsData];
-  //       for (const card of newCards) {
-  //         if (card.card_id === cardId) {
-  //           card.likes_count = result.data.likes_count;
-  //         }
-  //       }
-  //       setCardsData(newCards);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error.response.data.message);
-  //     });
-  // };
-
-  // const boardComponentVisibility = () => {
-  //   // this function should change the visiblity of the Board component based on board selection
-  // }
-
-  // finished this previously commented part with Matt's help!!
   const selectBoard = useCallback(
     (boardId) => {
       setSelectedBoard(boardId);
+      setCardsData([]);
       getAllCards(boardId);
+      setBoardComponentVisibility(true);
     },
     [setSelectedBoard]
   );
@@ -157,8 +149,9 @@ function App() {
           <section id="selected-board">
             <h2>Selected Board</h2>
             <p>
-              {selectedBoardObj?.title || "Select a board"} -{" "}
-              {selectedBoardObj?.owner}
+              {selectedBoardObj
+                ? `${selectedBoardObj.title} - ${selectedBoardObj.owner}`
+                : "Select a board"}
             </p>
           </section>
           <section className="new-board-form__container">
@@ -181,20 +174,19 @@ function App() {
             </button>
           </section>
         </section>
-        <section className="cards__container">
-          <section id="view-all-cards">
-            <Board
-              cardsData={cardsData}
-              selectedBoardObj={selectedBoardObj}
-              //    onDelete={deleteCard}
-              //    onLike={likeCard}
-            />
-          </section>
-          <section className="new-card-form__container">
-            {/* <h2>add card:</h2> */}
-            <NewCardForm onAddCardCallback={addCard} />
-          </section>
-        </section>
+
+        {boardComponentVisibility ? (
+          <Board
+            cardsData={cardsData}
+            selectedBoardObj={selectedBoardObj}
+            addCard={addCard}
+            deleteCard={deleteCard}
+            likeCard={likeCard}
+          />
+        ) : (
+          ""
+        )}
+
       </div>
       <footer>
         <span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span>
