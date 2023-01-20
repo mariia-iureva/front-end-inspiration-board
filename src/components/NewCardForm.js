@@ -24,17 +24,20 @@ const NewCardForm = (props) => {
   };
 
   return (
-    <form className="new-card-form__form" onSubmit={handleFormSubmit}>
-      <label htmlFor="message">Message:</label>
-      <input
-        name='message'
-        type='text'
-        value={formFields.message}
-        onChange={handleMessageChange}
-        required
-      />
-      <button className='new-card-form__submit' type="submit">Submit</button>
-    </form>
+    <section className='new-card-form__container'>
+      <h2>Create a New Card</h2>
+      <form className="new-card-form__form" onSubmit={handleFormSubmit}>
+        <label htmlFor="message">Message:</label>
+        <input
+          name='message'
+          type='text'
+          value={formFields.message}
+          onChange={handleMessageChange}
+          required
+        />
+        <button className='new-card-form__submit' type="submit">Submit</button>
+      </form>
+    </section>
   );
 };
 

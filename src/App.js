@@ -156,7 +156,7 @@ function App() {
             </button>
           </section>
         </section>
-        <section className="cards__container">
+        {/* <section className="cards__container"> */}
           {boardComponentVisibility ? (
             <Board
               cardsData={cardsData}
@@ -168,7 +168,7 @@ function App() {
           ) : (
             ''
           )}
-        </section>
+        {/* </section> */}
       </div>
       <footer>
         <span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span>

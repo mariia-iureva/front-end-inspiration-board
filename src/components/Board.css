@@ -1,8 +1,8 @@
-/* .cards__container {
+.cards__container {
   display: grid;
   grid-template-columns: 2fr 1fr;
   background-color: bisque;
-} */
+}
 
 .new-card-form__container {
   align-items: flex-start;
