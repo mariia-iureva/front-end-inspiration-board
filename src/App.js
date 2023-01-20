@@ -10,7 +10,8 @@ function App() {
   const [selectedBoard, setSelectedBoard] = useState(null);
   const [cardsData, setCardsData] = useState([]);
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
-  const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
+  const [boardComponentVisibility, setBoardComponentVisibility] =
+    useState(false);
 
   const getAllBoards = () => {
     axios
