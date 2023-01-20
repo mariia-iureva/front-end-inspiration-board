@@ -7,7 +7,12 @@
     min-height: 200px;
     padding: 2rem;
     box-shadow: 0 4px 8px 0 rgba(240, 232, 232, 0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
-  }
+}
+
+.card-entry:hover {
+  box-shadow: 0 4px 8px 0 rgba(240, 232, 232, 0.4), 0 6px 20px 0 rgba(0,0,0,0.39);
+  transition: 0.3s all ease-in-out;
+}
 
 .card-entry-message {
   font-size: 1.4rem;

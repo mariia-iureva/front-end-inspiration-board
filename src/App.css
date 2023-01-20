@@ -79,6 +79,10 @@ select, input {
   padding: .4em;
 }
 
+select {
+  width: 25%;
+}
+
 .new-board-form__submit, .new-card-form__submit {
   background-color: #fff;
   border: 2px solid #000;
