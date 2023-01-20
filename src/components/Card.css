@@ -19,11 +19,16 @@
   display: flex;
   justify-content: space-evenly;
   list-style-type: none;
-  padding: 0;
+  padding: .5em;
   width: 100%;
+}
+
+p {
+  padding: .5em;
 }
 
 button {
   border: none;
   padding: .5em;
+  border: 0;
 }
