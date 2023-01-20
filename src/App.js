@@ -11,7 +11,8 @@ function App() {
   const [cardsData, setCardsData] = useState([]);
 
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
-  const [boardComponentVisibility, setBoardComponentVisibility] = useState(false);
+  const [boardComponentVisibility, setBoardComponentVisibility] =
+    useState(false);
 
   const addBoard = (title, owner) => {
     axios
@@ -167,7 +168,7 @@ function App() {
                 //    onLike={likeCard}
               />
             ) : (
-              ''
+              ""
             )}
           </section>
         </section>
