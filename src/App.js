@@ -83,7 +83,7 @@ function App() {
 
   const deleteCard = (cardId) => {
     axios
-      .delete(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
+      .delete(`https://ll-inspo-board-api.herokuapp.com/cards/${cardId}`)
       .then(() => {
         const newCards = cardsData.filter((card) => card.id !== cardId);
         setCardsData(newCards);
@@ -95,7 +95,7 @@ function App() {
 
   const likeCard = (cardId) => {
     axios
-      .patch(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
+      .patch(`https://ll-inspo-board-api.herokuapp.com/cards/${cardId}`)
       .then((result) => {
         const newCards = [...cardsData];
         for (const card of newCards) {
