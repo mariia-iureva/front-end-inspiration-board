@@ -6,7 +6,7 @@ import './Board.css';
 
 const Board = (props) => {
     return (
-        <section className='cards__container'>
+        <section>
             <section>
               <h2>{props.selectedBoardObj?.title}</h2>
               <CardList 

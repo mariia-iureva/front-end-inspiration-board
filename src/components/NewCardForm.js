@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
+import './NewCardForm.css';
 
 const NewCardForm = (props) => {
 
@@ -32,7 +33,7 @@ const NewCardForm = (props) => {
         onChange={handleMessageChange}
         required
       />
-      <button type="submit">Submit</button>
+      <button className='new-card-form__submit' type="submit">Submit</button>
     </form>
   );
 };

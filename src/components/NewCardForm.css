@@ -4,3 +4,14 @@
     margin-bottom: 2em;
     width: 100%;
 }
+
+input {
+    box-sizing: initial;
+}
+
+.new-card-form__submit {
+    background-color: #fff;
+    border: 2px solid #000;
+    padding: .5em;
+    margin-top: 1em;
+}

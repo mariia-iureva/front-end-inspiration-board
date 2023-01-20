@@ -112,6 +112,7 @@ function App() {
   const selectBoard = useCallback(
     (boardId) => {
       setSelectedBoard(boardId);
+      setCardsData([]);
       getAllCards(boardId);
       setBoardComponentVisibility(true);
     },
@@ -157,19 +158,17 @@ function App() {
           </section>
         </section>
         <section className="cards__container">
-          <section id="view-all-cards">
-            {boardComponentVisibility ? (
-              <Board
-                cardsData={cardsData}
-                selectedBoardObj={selectedBoardObj}
-                addCard={addCard}
-                //    onDelete={deleteCard}
-                //    onLike={likeCard}
-              />
-            ) : (
-              ''
-            )}
-          </section>
+          {boardComponentVisibility ? (
+            <Board
+              cardsData={cardsData}
+              selectedBoardObj={selectedBoardObj}
+              addCard={addCard}
+              //    onDelete={deleteCard}
+              //    onLike={likeCard}
+            />
+          ) : (
+            ''
+          )}
         </section>
       </div>
       <footer>
