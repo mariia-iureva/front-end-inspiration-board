@@ -14,7 +14,7 @@ const Board = (props) => {
               />
             </section>
             <h2>Create a New Card</h2>
-            <NewCardForm onAddCardCallback={props.addCard} />
+            <NewCardForm addCard={props.addCard} />
         </section>
     );
 };

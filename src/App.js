@@ -162,7 +162,7 @@ function App() {
               <Board
                 cardsData={cardsData}
                 selectedBoardObj={selectedBoardObj}
-                onAddCardCallback={addCard}
+                addCard={addCard}
                 //    onDelete={deleteCard}
                 //    onLike={likeCard}
               />

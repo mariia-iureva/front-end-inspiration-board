@@ -14,7 +14,7 @@ const NewCardForm = (props) => {
   const handleFormSubmit = (event)=>{
     event.preventDefault();
 
-    props.onAddCardCallback(formFields.message);
+    props.addCard(formFields.message);
 
     setFormFields({
       message:"",
@@ -38,7 +38,7 @@ const NewCardForm = (props) => {
 };
 
 // NewCardForm.propTypes = {
-//   onAddCardCallback: PropTypes.func.isRequired,
+//   addCard: PropTypes.func.isRequired,
 // };
 
 export default NewCardForm;
