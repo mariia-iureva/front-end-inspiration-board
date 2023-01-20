@@ -13,18 +13,6 @@ const Card = (props) => {
     props.deleteCard(props.card_id);
   };
 
-  //   const updatedMessage = {
-  //     id: props.id,
-  //     message: props.message,
-  //     liked: !props.liked,
-  //     board_id: props.board_id,
-  //   };
-
-  //   props.onLikeMessage(updatedMessage.id);
-  // };
-
-  // const heartColor = props.liked ? '❤️' : '🤍';
-
   return (
     <div className="card-entry">
       <p className="card-entry-message">{props.message}</p>
@@ -50,12 +38,12 @@ const Card = (props) => {
   );
 };
 
-// Card.propTypes = {
-//   cardId: PropTypes.number.isRequired,
-//   message: PropTypes.string.isRequired,
-//   likesCount: PropTypes.number.isRequired,
-//   onLike: PropTypes.func.isRequired,
-//   onDelete: PropTypes.func.isRequired,
-// };
+Card.propTypes = {
+  card_id: PropTypes.number.isRequired,
+  message: PropTypes.string.isRequired,
+  likes_count: PropTypes.number.isRequired,
+  likeCard: PropTypes.func.isRequired,
+  deleteCard: PropTypes.func.isRequired,
+};
 
 export default Card;

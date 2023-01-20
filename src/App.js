@@ -10,10 +10,54 @@ function App() {
   const [boardsData, setBoardsData] = useState([]);
   const [selectedBoard, setSelectedBoard] = useState(null);
   const [cardsData, setCardsData] = useState([]);
-
   const [boardFormVisibility, setBoardFormVisibility] = useState(true);
   const [boardComponentVisibility, setBoardComponentVisibility] =
     useState(false);
+
+  const getAllBoards = () => {
+    axios
+      .get(`https://ll-inspo-board-api.herokuapp.com/boards`)
+      .then((response) => {
+        setBoardsData(response.data);
+      })
+      .catch((error) => {
+        console.error(error.response.data.message);
+      });
+  };
+
+  const getAllCards = (boardId) => {
+    axios
+      .get(`https://ll-inspo-board-api.herokuapp.com/boards/${boardId}/cards`)
+      .then((response) => {
+        console.log(response.data);
+        setCardsData(response.data.cards);
+      })
+      .catch((error) => {
+        console.error(error.response.data.message);
+      });
+  };
+
+  const selectedBoardObj = useMemo(() => {
+    if (!selectedBoard || !boardsData?.length) {
+      return undefined;
+    }
+    console.log(boardsData);
+    return boardsData.find((board) => board.board_id === selectedBoard);
+  }, [boardsData, selectedBoard]);
+
+  useEffect(() => {
+    getAllBoards();
+  }, []);
+
+  const selectBoard = useCallback(
+    (boardId) => {
+      setSelectedBoard(boardId);
+      setCardsData([]);
+      getAllCards(boardId);
+      setBoardComponentVisibility(true);
+    },
+    [setSelectedBoard]
+  );
 
   const addBoard = (title, owner) => {
     axios
@@ -51,41 +95,6 @@ function App() {
       .catch((error) => console.log(error.response.data));
   };
 
-  const getAllBoards = () => {
-    axios
-      .get(`https://ll-inspo-board-api.herokuapp.com/boards`)
-      .then((response) => {
-        setBoardsData(response.data);
-      })
-      .catch((error) => {
-        console.error(error.response.data.message);
-      });
-  };
-
-  const getAllCards = (boardId) => {
-    axios
-      .get(`https://ll-inspo-board-api.herokuapp.com/boards/${boardId}/cards`)
-      .then((response) => {
-        console.log(response.data);
-        setCardsData(response.data.cards);
-      })
-      .catch((error) => {
-        console.error(error.response.data.message);
-      });
-  };
-
-  const selectedBoardObj = useMemo(() => {
-    if (!selectedBoard || !boardsData?.length) {
-      return undefined;
-    }
-    console.log(boardsData);
-    return boardsData.find((board) => board.board_id === selectedBoard);
-  }, [boardsData, selectedBoard]);
-
-  useEffect(() => {
-    getAllBoards();
-  }, []);
-
   const deleteCard = (cardId) => {
     axios
       .delete(`https://ll-inspo-board-api.herokuapp.com/cards/${cardId}`)
@@ -115,16 +124,6 @@ function App() {
         console.error(error.response.data.message);
       });
   };
-
-  const selectBoard = useCallback(
-    (boardId) => {
-      setSelectedBoard(boardId);
-      setCardsData([]);
-      getAllCards(boardId);
-      setBoardComponentVisibility(true);
-    },
-    [setSelectedBoard]
-  );
 
   const sortCards = (category) => {
     if (category === "id") {
