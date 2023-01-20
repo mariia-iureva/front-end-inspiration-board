@@ -80,34 +80,34 @@ function App() {
     getAllBoards();
   }, []);
 
-  // const deleteCard = (cardId) => {
-  //   axios
-  //     .delete(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
-  //     .then(() => {
-  //       const newCards = cardsData.filter((card) => card.id !== cardId);
-  //       setCardsData(newCards);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error.response.data.message);
-  //     });
-  // };
+  const deleteCard = (cardId) => {
+    axios
+      .delete(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
+      .then(() => {
+        const newCards = cardsData.filter((card) => card.id !== cardId);
+        setCardsData(newCards);
+      })
+      .catch((error) => {
+        console.error(error.response.data.message);
+      });
+  };
 
-  // const likeCard = (cardId) => {
-  //   axios
-  //     .patch(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
-  //     .then((result) => {
-  //       const newCards = [...cardsData];
-  //       for (const card of newCards) {
-  //         if (card.card_id === cardId) {
-  //           card.likes_count = result.data.likes_count;
-  //         }
-  //       }
-  //       setCardsData(newCards);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error.response.data.message);
-  //     });
-  // };
+  const likeCard = (cardId) => {
+    axios
+      .patch(`${process.env.REACT_APP_BACKEND_URL}/cards/${cardId}`)
+      .then((result) => {
+        const newCards = [...cardsData];
+        for (const card of newCards) {
+          if (card.id === cardId) {
+            card.likes_count = result.data.likes_count;
+          }
+        }
+        setCardsData(newCards);
+      })
+      .catch((error) => {
+        console.error(error.response.data.message);
+      });
+  };
 
   const selectBoard = useCallback(
     (boardId) => {
@@ -156,19 +156,17 @@ function App() {
             </button>
           </section>
         </section>
-        {/* <section className="cards__container"> */}
           {boardComponentVisibility ? (
             <Board
               cardsData={cardsData}
               selectedBoardObj={selectedBoardObj}
               addCard={addCard}
-              //    onDelete={deleteCard}
-              //    onLike={likeCard}
+              deleteCard={deleteCard}
+              likeCard={likeCard}
             />
           ) : (
             ''
           )}
-        {/* </section> */}
       </div>
       <footer>
         <span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span>

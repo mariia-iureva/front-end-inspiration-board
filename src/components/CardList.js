@@ -13,6 +13,8 @@ const CardList = (props) => {
                     board_id={card.board_id}
                     likes_count={card.likes_count}
                     message={card.message}
+                    likeCard={props.likeCard}
+                    deleteCard={props.deleteCard}
                 />
             ))}
         </div>

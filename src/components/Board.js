@@ -11,6 +11,8 @@ const Board = (props) => {
           <h2>{props.selectedBoardObj?.title}</h2>
           <CardList 
             cardsData={props.cardsData}
+            likeCard={props.likeCard}
+            deleteCard={props.deleteCard}
           />
         </section>
         <NewCardForm addCard={props.addCard} />
