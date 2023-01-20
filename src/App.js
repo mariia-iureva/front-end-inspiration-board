@@ -30,31 +30,18 @@ function App() {
   };
 
   const addCard = (message) => {
-<<<<<<< HEAD
-    console.log(selectedBoard.boardId);
-    axios
-      .post(
-        `${process.env.REACT_APP_BACKEND_URL}/boards/${selectedBoardObj.board_id}/cards`,
-=======
     axios
       .post(
         `https://ll-inspo-board-api.herokuapp.com/boards/${selectedBoardObj.board_id}/cards`,
->>>>>>> main
+
         { message }
       )
       .then((result) => {
         const newCard = {
-<<<<<<< HEAD
-          cardId: result.data.card.card_id,
-          message: result.data.card.message,
-          likesCount: result.data.card.likes_count,
-          boardId: result.data.card.board_id,
-=======
           card_id: result.data.card.id,
           message: result.data.card.message,
           likes_count: result.data.card.likes_count,
           board_id: result.data.card.board_id,
->>>>>>> main
         };
         setCardsData([...cardsData, newCard]);
       })
@@ -186,7 +173,6 @@ function App() {
         ) : (
           ""
         )}
-
       </div>
       <footer>
         <span>Made with ❤️ by D18 Tigers Masha, Neema, Thao, and Yael</span>
